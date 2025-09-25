@@ -10,6 +10,7 @@ use App\Models\Quiz;
 use App\Models\UserSkillLevel;
 use App\Models\Achievement;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use App\Models\UserLessonProgress;
 
 class User extends Authenticatable
 {
@@ -24,6 +25,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'xp',
     ];
 
     /**
@@ -46,6 +48,7 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    protected $appends = ['level'];
 
     public function quizzes()
     {

@@ -16,6 +16,7 @@ class Question extends Model
         'aksara_id',
         'character',
         'body',
+        'type',
         'options',
         'correct_answer'
     ];

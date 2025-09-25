@@ -7,6 +7,9 @@ use App\Http\Controllers\ArenaController;
 use App\Http\Controllers\AtlasController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AchievementController;
+use App\Http\Controllers\FocusController;
+use Illuminate\Support\Facades\Auth;
+
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -37,6 +40,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/fokus', [FocusController::class, 'index'])->name('fokus.index');
+    Route::post('/fokus/latih/{aksara}', [FocusController::class, 'startPractice'])->name('fokus.startPractice');
 });
 
 require __DIR__.'/auth.php';

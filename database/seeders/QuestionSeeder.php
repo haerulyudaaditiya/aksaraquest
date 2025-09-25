@@ -1,45 +1,67 @@
 <?php
-
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Aksara;
 use App\Models\Question;
 
 class QuestionSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         Question::query()->delete();
-
-        // Ambil semua data aksara sebagai dasar pembuatan soal
         $aksaras = Aksara::all();
+        if ($aksaras->count() < 4) { return; }
 
-        if ($aksaras->count() < 4) {
-            // Hentikan seeder jika data aksara kurang dari 4, karena sulit membuat pilihan ganda
-            $this->command->warn('Tidak cukup data aksara untuk membuat soal (minimal 4).');
-            return;
-        }
+        $types = ['character_to_latin', 'latin_to_character', 'audio_to_latin', 'audio_to_character'];
 
-        // Buat 1 soal untuk setiap aksara
         foreach ($aksaras as $correctAksara) {
-            // Ambil 3 aksara lain secara acak sebagai pilihan jawaban yang salah
-            $wrongOptions = $aksaras->where('id', '!=', $correctAksara->id)->random(3)->pluck('latin');
+            // Buat beberapa soal untuk setiap aksara agar bank soal cukup
+            for ($i = 0; $i < 2; $i++) {
+                foreach ($types as $type) {
+                    // Pastikan soal audio hanya dibuat jika ada file audionya
+                    if (str_starts_with($type, 'audio_') && !$correctAksara->audio_url) {
+                        continue;
+                    }
 
-            // Gabungkan jawaban benar dan salah, lalu acak urutannya
-            $options = $wrongOptions->push($correctAksara->latin)->shuffle()->values()->all();
+                    $wrongOptions = $aksaras->where('id', '!=', $correctAksara->id)->random(3);
+                    $body = '';
+                    $options = [];
+                    $correctAnswer = '';
 
-            Question::create([
-                'aksara_id' => $correctAksara->id,
-                'character' => $correctAksara->character, // Tambahkan karakter untuk ditampilkan di soal
-                'body' => 'Aksara ini dibaca...',
-                'options' => $options, // Simpan sebagai JSON
-                'correct_answer' => $correctAksara->latin,
-            ]);
+                    switch ($type) {
+                        case 'character_to_latin':
+                            $body = 'Aksara ini dibaca...';
+                            $options = $wrongOptions->pluck('latin')->push($correctAksara->latin)->shuffle()->all();
+                            $correctAnswer = $correctAksara->latin;
+                            break;
+                        case 'latin_to_character':
+                            $body = "Pilih aksara untuk '" . $correctAksara->latin . "'";
+                            $options = $wrongOptions->pluck('character')->push($correctAksara->character)->shuffle()->all();
+                            $correctAnswer = $correctAksara->character;
+                            break;
+                        case 'audio_to_latin':
+                            $body = 'Dengarkan suara ini dan pilih nama yang benar.';
+                            $options = $wrongOptions->pluck('latin')->push($correctAksara->latin)->shuffle()->all();
+                            $correctAnswer = $correctAksara->latin;
+                            break;
+                        case 'audio_to_character':
+                            $body = 'Dengarkan suara ini dan pilih aksara yang benar.';
+                            $options = $wrongOptions->pluck('character')->push($correctAksara->character)->shuffle()->all();
+                            $correctAnswer = $correctAksara->character;
+                            break;
+                    }
+
+                    Question::create([
+                        'aksara_id' => $correctAksara->id,
+                        'character' => $correctAksara->character,
+                        'body' => $body,
+                        'type' => $type,
+                        'options' => $options,
+                        'correct_answer' => $correctAnswer,
+                    ]);
+                }
+            }
         }
     }
 }

@@ -5,21 +5,23 @@ import Dropdown from "@/Components/Dropdown.vue";
 import DropdownLink from "@/Components/DropdownLink.vue";
 import NavLink from "@/Components/NavLink.vue";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink.vue";
-import { Link } from "@inertiajs/vue3";
+import { Link, usePage } from "@inertiajs/vue3";
+import Star from '@/Components/Icons/Star.vue';
 
 const showingNavigationDropdown = ref(false);
+
+// Ambil data user, bisa jadi null jika belum login
+const user = usePage().props.auth.user;
 </script>
 
 <template>
     <div>
-        <div class="min-h-screen bg-gray-100">
-            <nav class="border-b border-gray-100 bg-white">
-                <!-- Primary Navigation Menu -->
-                <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                    <div class="flex h-16 justify-between">
+        <div class="min-h-screen bg-slate-100">
+            <nav class="bg-white border-b border-gray-100">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="flex justify-between h-16">
                         <div class="flex">
-                            <!-- Logo -->
-                            <div class="flex shrink-0 items-center">
+                            <div class="shrink-0 flex items-center">
                                 <Link :href="route('dashboard')">
                                     <ApplicationLogo
                                         class="block h-9 w-auto fill-current text-gray-800"
@@ -27,7 +29,6 @@ const showingNavigationDropdown = ref(false);
                                 </Link>
                             </div>
 
-                            <!-- Navigation Links -->
                             <div
                                 class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex"
                             >
@@ -41,57 +42,77 @@ const showingNavigationDropdown = ref(false);
                                     :href="route('atlas.index')"
                                     :active="route().current('atlas.index')"
                                 >
-                                    The Atlas
+                                    Belajar
                                 </NavLink>
                                 <NavLink
                                     :href="route('arena.index')"
                                     :active="route().current('arena.index')"
                                 >
-                                    The Arena
+                                    Arena
                                 </NavLink>
-                                <NavLink :href="route('prestasi.index')" :active="route().current('prestasi.index')">
+                                <NavLink
+                                    :href="route('fokus.index')"
+                                    :active="route().current('fokus.index')"
+                                >
+                                    Fokus
+                                </NavLink>
+                                <NavLink
+                                    :href="route('prestasi.index')"
+                                    :active="route().current('prestasi.index')"
+                                >
                                     Prestasi
                                 </NavLink>
                             </div>
                         </div>
 
-                        <div class="hidden sm:ms-6 sm:flex sm:items-center">
-                            <!-- Settings Dropdown -->
-                            <div class="me-4 flex items-center gap-4 border-r border-slate-200 pe-4">
+                        <div class="hidden sm:flex sm:items-center sm:ms-6">
+                            <div
+                                v-if="user"
+                                class="me-4 flex items-center gap-4 border-r border-slate-200 pe-4"
+                            >
                                 <div class="flex items-center gap-1.5">
-                                    <svg class="h-5 w-5 text-amber-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <svg
+                                        class="h-5 w-5 text-amber-400"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 20 20"
+                                        fill="currentColor"
+                                    >
+                                    </svg>
+                                    <Star class="h-5 w-5 text-amber-400" />
+                                    <span class="font-extrabold text-amber-600"
+                                        >{{ user.xp }} XP</span
+                                    >
+                                </div>
+                                <div class="flex items-center gap-1.5">
+                                    <svg
+                                        class="h-5 w-5 text-indigo-500"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 20 20"
+                                        fill="currentColor"
+                                    >
                                         <path
-                                            :fill-rule="'evenodd'"
-                                            d="M10.868 2.884c.321-.772 1.415-.772 1.736 0l1.291 3.118c.244.588.766 1.013 1.388 1.1l3.428.498c.847.123 1.184 1.154.57 1.751l-2.48 2.418a1.536 1.536 0 0 0-.44 1.353l.585 3.415c.145.845-.738 1.493-1.503 1.09l-3.064-1.61c-.551-.29-1.192-.29-1.743 0l-3.064 1.61c-.765.403-1.648-.245-1.503-1.09l.585-3.415a1.536 1.536 0 0 0-.44-1.353L2.35 11.751c-.613-.597-.277-1.628.57-1.751l3.428-.498a1.536 1.536 0 0 0 1.388-1.1l1.291-3.118Z"
-                                            :clip-rule="'evenodd'"
+                                            fill-rule="evenodd"
+                                            d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm3.857-9.809a.75.75 0 0 0-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 1 0-1.06 1.061l2.5 2.5a.75.75 0 0 0 1.137-.089l4-5.5Z"
+                                            clip-rule="evenodd"
                                         />
                                     </svg>
-                                    <span class="font-extrabold text-amber-600">{{ $page.props.auth.user.xp }} XP</span>
-                                </div>
-
-                                <div class="flex items-center gap-1.5">
-                                    <svg class="h-5 w-5 text-indigo-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                    <path
-                                        :fill-rule="'evenodd'"
-                                        d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm3.857-9.809a.75.75 0 0 0-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 1 0-1.06 1.061l2.5 2.5a.75.75 0 0 0 1.137-.089l4-5.5Z"
-                                        :clip-rule="'evenodd'"
-                                    />
-                                    </svg>
-                                    <span class="font-extrabold text-indigo-600">Level {{ $page.props.auth.user.level }}</span>
+                                    <span class="font-extrabold text-indigo-600"
+                                        >Level {{ user.level }}</span
+                                    >
                                 </div>
                             </div>
-                            <div class="relative ms-3">
-                                <Dropdown align="right" width="48">
+
+                            <div class="ms-3 relative">
+                                <Dropdown v-if="user" align="right" width="48">
                                     <template #trigger>
                                         <span class="inline-flex rounded-md">
                                             <button
                                                 type="button"
-                                                class="inline-flex items-center rounded-md border border-transparent bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out hover:text-gray-700 focus:outline-none"
+                                                class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
                                             >
-                                                {{ $page.props.auth.user.name }}
-
+                                                {{ user.name }}
                                                 <svg
-                                                    class="-me-0.5 ms-2 h-4 w-4"
+                                                    class="ms-2 -me-0.5 h-4 w-4"
                                                     xmlns="http://www.w3.org/2000/svg"
                                                     viewBox="0 0 20 20"
                                                     fill="currentColor"
@@ -105,33 +126,30 @@ const showingNavigationDropdown = ref(false);
                                             </button>
                                         </span>
                                     </template>
-
                                     <template #content>
                                         <DropdownLink
                                             :href="route('profile.edit')"
                                         >
-                                            Profile
+                                            Profil
                                         </DropdownLink>
                                         <DropdownLink
                                             :href="route('logout')"
                                             method="post"
                                             as="button"
+                                            >Log Out</DropdownLink
                                         >
-                                            Log Out
-                                        </DropdownLink>
                                     </template>
                                 </Dropdown>
                             </div>
                         </div>
 
-                        <!-- Hamburger -->
                         <div class="-me-2 flex items-center sm:hidden">
                             <button
                                 @click="
                                     showingNavigationDropdown =
                                         !showingNavigationDropdown
                                 "
-                                class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 transition duration-150 ease-in-out hover:bg-gray-100 hover:text-gray-500 focus:bg-gray-100 focus:text-gray-500 focus:outline-none"
+                                class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out"
                             >
                                 <svg
                                     class="h-6 w-6"
@@ -167,7 +185,6 @@ const showingNavigationDropdown = ref(false);
                     </div>
                 </div>
 
-                <!-- Responsive Navigation Menu -->
                 <div
                     :class="{
                         block: showingNavigationDropdown,
@@ -175,29 +192,51 @@ const showingNavigationDropdown = ref(false);
                     }"
                     class="sm:hidden"
                 >
-                    <div class="space-y-1 pb-3 pt-2">
+                    <div class="pt-2 pb-3 space-y-1">
                         <ResponsiveNavLink
                             :href="route('dashboard')"
                             :active="route().current('dashboard')"
                         >
                             Dashboard
                         </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            :href="route('atlas.index')"
+                            :active="route().current('atlas.index')"
+                        >
+                            Belajar
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            :href="route('arena.index')"
+                            :active="route().current('arena.index')"
+                        >
+                            Arena
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            :href="route('fokus.index')"
+                            :active="route().current('fokus.index')"
+                        >
+                            Fokus
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            :href="route('prestasi.index')"
+                            :active="route().current('prestasi.index')"
+                        >
+                            Prestasi
+                        </ResponsiveNavLink>
                     </div>
 
-                    <!-- Responsive Settings Options -->
-                    <div class="border-t border-gray-200 pb-1 pt-4">
+                    <div v-if="user" class="pt-4 pb-1 border-t border-gray-200">
                         <div class="px-4">
-                            <div class="text-base font-medium text-gray-800">
-                                {{ $page.props.auth.user.name }}
+                            <div class="font-medium text-base text-gray-800">
+                                {{ user.name }}
                             </div>
-                            <div class="text-sm font-medium text-gray-500">
-                                {{ $page.props.auth.user.email }}
+                            <div class="font-medium text-sm text-gray-500">
+                                {{ user.email }}
                             </div>
                         </div>
-
                         <div class="mt-3 space-y-1">
                             <ResponsiveNavLink :href="route('profile.edit')">
-                                Profile
+                                Profil
                             </ResponsiveNavLink>
                             <ResponsiveNavLink
                                 :href="route('logout')"
@@ -211,14 +250,12 @@ const showingNavigationDropdown = ref(false);
                 </div>
             </nav>
 
-            <!-- Page Heading -->
             <header class="bg-white shadow" v-if="$slots.header">
-                <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                     <slot name="header" />
                 </div>
             </header>
 
-            <!-- Page Content -->
             <main>
                 <slot />
             </main>

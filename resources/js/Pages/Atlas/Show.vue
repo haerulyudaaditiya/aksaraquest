@@ -75,7 +75,7 @@ onBeforeUnmount(() => {
                     <div class="p-8 grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
 
                         <div class="flex flex-col items-center justify-center bg-slate-50 border-2 border-slate-200 rounded-xl p-12 aspect-square">
-                            <p class="text-9xl md:text-[12rem] font-bold text-slate-800">{{ aksara.character }}</p>
+                            <p class="text-9xl md:text-[12rem] font-bold text-slate-800 font-sunda">{{ aksara.character }}</p>
                             <div class="relative flex items-center gap-3 mt-4">
                                  <p class="text-4xl font-medium text-indigo-600 capitalize">{{ aksara.latin }}</p>
                                  <button v-if="aksara.audio_url" @click="playAudio" class="text-gray-400 hover:text-indigo-600 transition duration-300" title="Dengarkan Pengucapan">

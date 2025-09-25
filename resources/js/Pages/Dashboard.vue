@@ -1,6 +1,7 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, Link } from '@inertiajs/vue3';
+import Star from '@/Components/Icons/Star.vue';
 </script>
 
 <template>
@@ -35,15 +36,13 @@ import { Head, Link } from '@inertiajs/vue3';
                                       <path fill-rule="evenodd" d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm3.857-9.809a.75.75 0 0 0-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 1 0-1.06 1.061l2.5 2.5a.75.75 0 0 0 1.137-.089l4-5.5Z" clip-rule="evenodd" />
                                     </svg>
                                     <p class="text-4xl font-extrabold text-indigo-600">{{ $page.props.auth.user.level }}</p>
-                                _</div>
+                                </div>
                             </div>
 
                             <div class="bg-slate-50 border-2 border-slate-800 rounded-xl p-6">
                                 <p class="text-sm font-bold text-slate-500 uppercase">Total XP</p>
                                 <div class="flex items-center justify-center gap-2 mt-2">
-                                    <svg class="h-8 w-8 text-amber-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fill-rule="evenodd" d="M10.868 2.884c.321-.772 1.415-.772 1.736 0l1.291 3.118c.244.588.766 1.013 1.388 1.1l3.428.498c.847.123 1.184 1.154.57 1.751l-2.48 2.418a1.536 1.536 0 0 0-.44 1.353l.585 3.415c.145.845-.738 1.493-1.503 1.09l-3.064-1.61c-.551-.29-1.192-.29-1.743 0l-3.064 1.61c-.765.403-1.648-.245-1.503-1.09l.585-3.415a1.536 1.536 0 0 0-.44-1.353L2.35 11.751c-.613-.597-.277-1.628.57-1.751l3.428-.498a1.536 1.536 0 0 0 1.388-1.1l1.291-3.118Z" clip-rule="evenodd" />
-                                    </svg>
+                                   <Star class="h-5 w-5 text-amber-400" />
                                     <p class="text-4xl font-extrabold text-amber-600">{{ $page.props.auth.user.xp }}</p>
                                 </div>
                             </div>

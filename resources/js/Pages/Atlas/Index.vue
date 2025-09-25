@@ -45,7 +45,7 @@ defineProps({
                                 :href="route('atlas.show', aksara.id)"
                                 class="block bg-white border-2 border-slate-800 rounded-xl p-4 flex flex-col items-center justify-center aspect-square shadow-[4px_4px_0_#1e293b] hover:shadow-[4px_4px_0_#4f46e5] hover:-translate-y-1 hover:-translate-x-1 transition-all duration-200 cursor-pointer group"
                             >
-                                <p class="text-6xl font-bold text-slate-700 transition-colors group-hover:text-indigo-600">
+                                <p class="text-6xl font-bold text-slate-700 transition-colors group-hover:text-indigo-600 font-sunda">
                                     {{ aksara.character }}
                                 </p>
                                 <p class="mt-2 text-lg font-medium text-indigo-600">
