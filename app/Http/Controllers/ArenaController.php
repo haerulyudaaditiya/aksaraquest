@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule; // <-- Import Rule untuk validasi
 use Inertia\Inertia;
 use App\Services\AchievementService;
+use Carbon\Carbon;
 
 class ArenaController extends Controller
 {
@@ -128,24 +129,48 @@ class ArenaController extends Controller
             abort(403);
         }
 
-        // Kode ini sudah bagus dan efisien
+        // Kode perhitungan skor dan XP yang sudah ada
         $correctAnswers = $quiz->answers()->where('is_correct', true)->count();
         $totalQuestions = $quiz->questions()->count();
         $score = ($totalQuestions > 0) ? round(($correctAnswers / $totalQuestions) * 100) : 0;
         $quiz->update(['score' => $score]);
-
         $xpGained = $correctAnswers * 10;
+
         $user = Auth::user();
 
+        // Logika Level Up yang sudah ada
         $levelBefore = $user->level;
-
         $user->increment('xp', $xpGained);
-
         $user->refresh();
         $levelAfter = $user->level;
-
         $levelUp = ($levelAfter > $levelBefore);
 
+        // --- LOGIKA STREAK BARU DIMASUKKAN DI SINI ---
+        $today = Carbon::today();
+        // Ambil tanggal aktivitas terakhir, jika ada
+        $lastActivity = $user->last_activity_at ? Carbon::parse($user->last_activity_at)->today() : null;
+
+        if ($lastActivity) {
+            // Jika aktivitas terakhir adalah kemarin, lanjutkan streak
+            if ($lastActivity->isYesterday()) {
+                $user->streak_count += 1;
+            }
+            // Jika aktivitas terakhir bukan hari ini DAN bukan kemarin, reset streak ke 1
+            else if (!$lastActivity->isToday()) {
+                $user->streak_count = 1;
+            }
+            // Jika sudah bermain hari ini, streak tidak berubah, hanya update waktunya
+        } else {
+            // Jika ini aktivitas pertama kali, mulai streak dari 1
+            $user->streak_count = 1;
+        }
+
+        // Selalu perbarui waktu aktivitas terakhir ke sekarang
+        $user->last_activity_at = now();
+        $user->save();
+        // --- AKHIR LOGIKA STREAK ---
+
+        // Pengecekan Achievement yang sudah ada
         (new AchievementService())->checkAndAwardAchievements($user);
 
         return Inertia::render('Arena/Results', [

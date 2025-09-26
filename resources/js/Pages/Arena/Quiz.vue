@@ -12,6 +12,7 @@ const props = defineProps({
 
 const isSubmitting = ref(false);
 const selectedAnswer = ref(null);
+const answerResult = ref(null);
 
 const playQuestionAudio = () => {
     if (
@@ -19,14 +20,22 @@ const playQuestionAudio = () => {
         props.question.aksara &&
         props.question.aksara.audio_url
     ) {
-        const audio = new Audio(props.question.aksara.audio_url);
-        audio.play();
+        new Audio(props.question.aksara.audio_url).play();
     }
 };
 
 const submitAnswer = (option) => {
     isSubmitting.value = true;
     selectedAnswer.value = option;
+    answerResult.value =
+        option === props.question.correct_answer ? "correct" : "incorrect";
+
+    if (answerResult.value === "correct") {
+        new Audio("/audio/correct.mp3").play();
+    } else {
+        new Audio("/audio/wrong.mp3").play();
+    }
+
     setTimeout(() => {
         router.post(
             route("arena.quiz.answer", props.quiz.id),
@@ -39,6 +48,7 @@ const submitAnswer = (option) => {
                 preserveScroll: true,
                 onSuccess: () => {
                     selectedAnswer.value = null;
+                    answerResult.value = null;
                     isSubmitting.value = false;
                 },
                 onError: () => {
@@ -50,19 +60,24 @@ const submitAnswer = (option) => {
 };
 
 const buttonClass = (option) => {
-    if (!isSubmitting.value)
+    if (!isSubmitting.value) {
         return "bg-white shadow-[4px_4px_0_#d1d5db] hover:bg-slate-50 active:shadow-[2px_2px_0_#d1d5db] active:translate-y-0.5";
+    }
     const isSelected = option === selectedAnswer.value;
     const isCorrect = option === props.question.correct_answer;
     if (isCorrect)
         return "bg-green-400 border-green-600 shadow-[4px_4px_0_#15803d] text-white";
     if (isSelected && !isCorrect)
         return "bg-red-400 border-red-600 shadow-[4px_4px_0_#b91c1c] text-white";
+    // Tampilkan jawaban benar jika pengguna salah memilih
+    if (answerResult.value === "incorrect" && isCorrect) {
+        return "bg-green-400 border-green-600 shadow-[4px_4px_0_#15803d] text-white";
+    }
     return "bg-slate-200 border-slate-300 text-slate-400 cursor-not-allowed";
 };
 
 const progressPercentage = computed(
-    () => ((props.answeredCount + 1) / props.totalQuestions) * 100
+    () => (props.answeredCount / props.totalQuestions) * 100
 );
 </script>
 
@@ -71,12 +86,16 @@ const progressPercentage = computed(
     <AuthenticatedLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Quiz #{{ quiz.id }}
+                Quiz
             </h2>
         </template>
         <div class="py-12 bg-slate-100">
             <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
                 <div class="mb-4">
+                    <p class="text-lg text-slate-600 font-bold mb-2">
+                        Pertanyaan {{ answeredCount + 1 }} dari
+                        {{ totalQuestions }}
+                    </p>
                     <div
                         class="bg-slate-200 rounded-full h-5 border-2 border-slate-800 shadow-[4px_4px_0_#1e293b]"
                     >
@@ -86,19 +105,17 @@ const progressPercentage = computed(
                         ></div>
                     </div>
                 </div>
+
                 <div
                     class="bg-white border-2 border-slate-800 overflow-hidden shadow-[8px_8px_0_#1e293b] sm:rounded-2xl"
                 >
                     <div class="p-8">
                         <div v-if="question" class="text-center mb-8">
-                            <p class="text-lg text-slate-600 font-bold mb-6">
-                                Pertanyaan {{ answeredCount + 1 }} dari
-                                {{ totalQuestions }}
-                            </p>
+                            <h3 class="text-2xl font-bold text-slate-900 mb-4">
+                                {{ question.body }}
+                            </h3>
 
-                            <div
-                                class="h-48 flex items-center justify-center my-4"
-                            >
+                            <div class="h-48 flex items-center justify-center">
                                 <div
                                     v-if="
                                         question.type === 'character_to_latin'
@@ -145,13 +162,9 @@ const progressPercentage = computed(
                                     </svg>
                                 </div>
                             </div>
-
-                            <h3 class="text-2xl font-bold text-slate-900">
-                                {{ question.body }}
-                            </h3>
                         </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <button
                                 v-for="option in question.options"
                                 :key="option"

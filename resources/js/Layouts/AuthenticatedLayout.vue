@@ -6,7 +6,7 @@ import DropdownLink from "@/Components/DropdownLink.vue";
 import NavLink from "@/Components/NavLink.vue";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink.vue";
 import { Link, usePage } from "@inertiajs/vue3";
-import Star from '@/Components/Icons/Star.vue';
+import Star from "@/Components/Icons/Star.vue";
 
 const showingNavigationDropdown = ref(false);
 
@@ -70,20 +70,30 @@ const user = usePage().props.auth.user;
                                 v-if="user"
                                 class="me-4 flex items-center gap-4 border-r border-slate-200 pe-4"
                             >
-                                <div class="flex items-center gap-1.5">
-                                    <svg
-                                        class="h-5 w-5 text-amber-400"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 20 20"
-                                        fill="currentColor"
+                                <div
+                                    class="flex items-center gap-1.5"
+                                    title="Streak Harian"
+                                >
+                                    <span
+                                        class="font-extrabold text-orange-600"
+                                        >🔥 {{ user.streak_count }}</span
                                     >
-                                    </svg>
+                                </div>
+
+                                <div
+                                    class="flex items-center gap-1.5"
+                                    title="Total XP"
+                                >
                                     <Star class="h-5 w-5 text-amber-400" />
                                     <span class="font-extrabold text-amber-600"
                                         >{{ user.xp }} XP</span
                                     >
                                 </div>
-                                <div class="flex items-center gap-1.5">
+
+                                <div
+                                    class="flex items-center gap-1.5"
+                                    title="Level Saat Ini"
+                                >
                                     <svg
                                         class="h-5 w-5 text-indigo-500"
                                         xmlns="http://www.w3.org/2000/svg"

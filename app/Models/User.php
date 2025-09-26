@@ -26,6 +26,8 @@ class User extends Authenticatable
         'email',
         'password',
         'xp',
+        'streak_count',
+        'last_activity_at',
     ];
 
     /**
@@ -81,5 +83,10 @@ class User extends Authenticatable
         return $this->belongsToMany(Achievement::class, 'user_achievements')
                     ->withPivot('unlocked_at') // Sertakan kolom tambahan dari tabel pivot
                     ->withTimestamps(); // Otomatis kelola created_at/updated_at di tabel pivot
+    }
+
+    public function answers()
+    {
+        return $this->hasManyThrough(Answer::class, Quiz::class);
     }
 }
