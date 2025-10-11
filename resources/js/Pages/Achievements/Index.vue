@@ -4,21 +4,27 @@ import { Head } from '@inertiajs/vue3';
 
 // --- PERUBAHAN DIMULAI DI SINI ---
 
-// 1. Impor semua komponen ikon secara langsung
+// 1. Impor SEMUA komponen ikon yang kita miliki
 import AcademicCap from '@/Components/Icons/AcademicCap.vue';
 import Star from '@/Components/Icons/Star.vue';
 import CheckBadge from '@/Components/Icons/CheckBadge.vue';
+import Trophy from '@/Components/Icons/Trophy.vue';
+import Bolt from '@/Components/Icons/Bolt.vue';
+import Sparkles from '@/Components/Icons/Sparkles.vue';
 
 const props = defineProps({
     achievements: Array,
     unlocked: Array,
 });
 
-// 2. Buat sebuah "peta" untuk mencocokkan nama dari database dengan komponen yang diimpor
+// 2. Tambahkan ikon-ikon baru ke dalam "peta"
 const iconMap = {
     'academic-cap': AcademicCap,
     'star': Star,
     'check-badge': CheckBadge,
+    'trophy': Trophy,
+    'bolt': Bolt,
+    'sparkles': Sparkles,
 };
 
 const isUnlocked = (achievementId) => {

@@ -33,7 +33,13 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        if (Auth::user()->role === 'admin') {
+            return redirect()->route('admin.aksara.index');
+        }
+
         return redirect()->intended(route('dashboard', absolute: false));
+
+        // --- AKHIR PERUBAHAN LOGIKA ---
     }
 
     /**

@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             AksaraSeeder::class,
             AchievementSeeder::class,
             QuestionSeeder::class,
+            UserSeeder::class,
         ]);
     }
 }

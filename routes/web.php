@@ -10,6 +10,7 @@ use App\Http\Controllers\AchievementController;
 use App\Http\Controllers\FocusController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Admin\AksaraController as AdminAksaraController;
 
 
 Route::get('/', function () {
@@ -40,6 +41,15 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/fokus', [FocusController::class, 'index'])->name('fokus.index');
     Route::post('/fokus/latih/{aksara}', [FocusController::class, 'startPractice'])->name('fokus.startPractice');
+});
+
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/aksara', [AdminAksaraController::class, 'index'])->name('aksara.index');
+    Route::get('/aksara/{aksara}/edit', [AdminAksaraController::class, 'edit'])->name('aksara.edit');
+    Route::put('/aksara/{aksara}', [AdminAksaraController::class, 'update'])->name('aksara.update');
+    Route::get('/aksara/create', [AdminAksaraController::class, 'create'])->name('aksara.create');
+    Route::post('/aksara', [AdminAksaraController::class, 'store'])->name('aksara.store');
+    Route::delete('/aksara/{aksara}', [AdminAksaraController::class, 'destroy'])->name('aksara.destroy');
 });
 
 require __DIR__.'/auth.php';
