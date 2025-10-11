@@ -39,28 +39,34 @@ const user = usePage().props.auth.user;
                                     Dashboard
                                 </NavLink>
                                 <NavLink
-                                    :href="route('atlas.index')"
-                                    :active="route().current('atlas.index')"
+                                    :href="route('belajar.index')"
+                                    :active="route().current('belajar.*')"
                                 >
                                     Belajar
                                 </NavLink>
                                 <NavLink
                                     :href="route('arena.index')"
-                                    :active="route().current('arena.index')"
+                                    :active="route().current('arena.*')"
                                 >
                                     Arena
                                 </NavLink>
                                 <NavLink
                                     :href="route('fokus.index')"
-                                    :active="route().current('fokus.index')"
+                                    :active="route().current('fokus.*')"
                                 >
                                     Fokus
                                 </NavLink>
                                 <NavLink
                                     :href="route('prestasi.index')"
-                                    :active="route().current('prestasi.index')"
+                                    :active="route().current('prestasi.*')"
                                 >
                                     Prestasi
+                                </NavLink>
+                                <NavLink
+                                    :href="route('leaderboard.index')"
+                                    :active="route().current('leaderboard.*')"
+                                >
+                                    Peringkat
                                 </NavLink>
                             </div>
                         </div>
@@ -74,8 +80,7 @@ const user = usePage().props.auth.user;
                                     class="flex items-center gap-1.5"
                                     title="Streak Harian"
                                 >
-                                    <span
-                                        class="font-extrabold text-orange-600"
+                                    <span class="font-extrabold text-orange-600"
                                         >🔥 {{ user.streak_count }}</span
                                     >
                                 </div>
@@ -141,6 +146,12 @@ const user = usePage().props.auth.user;
                                             :href="route('profile.edit')"
                                         >
                                             Profil
+                                        </DropdownLink>
+                                        <DropdownLink
+                                            v-if="user.has_certificate"
+                                            :href="route('sertifikasi.view')"
+                                        >
+                                            Sertifikat Saya
                                         </DropdownLink>
                                         <DropdownLink
                                             :href="route('logout')"
@@ -210,28 +221,34 @@ const user = usePage().props.auth.user;
                             Dashboard
                         </ResponsiveNavLink>
                         <ResponsiveNavLink
-                            :href="route('atlas.index')"
-                            :active="route().current('atlas.index')"
+                            :href="route('belajar.index')"
+                            :active="route().current('belajar.*')"
                         >
                             Belajar
                         </ResponsiveNavLink>
                         <ResponsiveNavLink
                             :href="route('arena.index')"
-                            :active="route().current('arena.index')"
+                            :active="route().current('arena.*')"
                         >
                             Arena
                         </ResponsiveNavLink>
                         <ResponsiveNavLink
                             :href="route('fokus.index')"
-                            :active="route().current('fokus.index')"
+                            :active="route().current('fokus.*')"
                         >
                             Fokus
                         </ResponsiveNavLink>
                         <ResponsiveNavLink
                             :href="route('prestasi.index')"
-                            :active="route().current('prestasi.index')"
+                            :active="route().current('prestasi.*')"
                         >
                             Prestasi
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            :href="route('leaderboard.index')"
+                            :active="route().current('leaderboard.*')"
+                        >
+                            Peringkat
                         </ResponsiveNavLink>
                     </div>
 

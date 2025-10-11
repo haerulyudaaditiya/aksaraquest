@@ -10,6 +10,8 @@ use Illuminate\Validation\Rule; // <-- Import Rule untuk validasi
 use Inertia\Inertia;
 use App\Services\AchievementService;
 use Carbon\Carbon;
+use App\Models\CertificationAttempt;
+use Illuminate\Support\Facades\Redirect;
 
 class ArenaController extends Controller
 {
@@ -59,17 +61,19 @@ class ArenaController extends Controller
                 ->with('error', 'Maaf, bank soal tidak cukup untuk memulai kuis saat ini.');
         }
 
-        $quiz = $user->quizzes()->create();
+        $quiz = $user->quizzes()->create(['type' => 'arena']);
         $quiz->questions()->attach($questions->shuffle()); // Acak urutan soal agar tidak monoton
         return redirect()->route('arena.quiz.show', $quiz);
     }
 
     public function show(Quiz $quiz)
     {
-        // Pengecekan kepemilikan kuis (sudah bagus)
         if ($quiz->user_id !== Auth::id()) {
             abort(403);
         }
+
+        // Muat relasi yang dibutuhkan untuk judul dinamis
+        $quiz->load(['lesson', 'aksara']);
 
         $allQuestionIds = $quiz->questions()->pluck('questions.id');
         $answeredQuestionIds = $quiz->answers()->pluck('question_id');
@@ -79,7 +83,6 @@ class ArenaController extends Controller
             return redirect()->route('arena.quiz.results', $quiz);
         }
 
-        // PENYEMPURNAAN 2: Gunakan Eager Loading untuk efisiensi query.
         $question = Question::with('aksara')->find($nextQuestionId);
 
         return Inertia::render('Arena/Quiz', [
@@ -92,9 +95,7 @@ class ArenaController extends Controller
 
     public function answer(Request $request, Quiz $quiz)
     {
-        // PENYEMPURNAAN 3: Validasi bahwa soal adalah bagian dari kuis.
         $questionIdsInThisQuiz = $quiz->questions()->pluck('questions.id');
-
         $request->validate([
             'question_id' => ['required', 'exists:questions,id', Rule::in($questionIdsInThisQuiz)],
             'user_answer' => 'required|string',
@@ -109,7 +110,6 @@ class ArenaController extends Controller
             'is_correct' => $isCorrect,
         ]);
 
-        // ... (Logika skill level sudah bagus)
         $skill = $quiz->user->skillLevels()->firstOrNew(['aksara_id' => $question->aksara_id]);
         if ($isCorrect) {
             $skill->correct_streak += 1;
@@ -123,56 +123,72 @@ class ArenaController extends Controller
         return redirect()->route('arena.quiz.show', $quiz);
     }
 
+    /**
+     * Menampilkan hasil kuis dan memproses semua logika pasca-kuis.
+     */
     public function results(Quiz $quiz)
     {
         if ($quiz->user_id !== Auth::id()) {
             abort(403);
         }
 
-        // Kode perhitungan skor dan XP yang sudah ada
+        // 1. Hitung Skor
         $correctAnswers = $quiz->answers()->where('is_correct', true)->count();
         $totalQuestions = $quiz->questions()->count();
         $score = ($totalQuestions > 0) ? round(($correctAnswers / $totalQuestions) * 100) : 0;
         $quiz->update(['score' => $score]);
-        $xpGained = $correctAnswers * 10;
 
         $user = Auth::user();
 
-        // Logika Level Up yang sudah ada
+        // 2. Hitung & Tambahkan XP
+        $xpGained = $correctAnswers * 10;
         $levelBefore = $user->level;
         $user->increment('xp', $xpGained);
+
+        // 3. Cek Kenaikan Level
         $user->refresh();
         $levelAfter = $user->level;
         $levelUp = ($levelAfter > $levelBefore);
 
-        // --- LOGIKA STREAK BARU DIMASUKKAN DI SINI ---
+        // 4. Logika Streak Harian
         $today = Carbon::today();
-        // Ambil tanggal aktivitas terakhir, jika ada
         $lastActivity = $user->last_activity_at ? Carbon::parse($user->last_activity_at)->today() : null;
-
         if ($lastActivity) {
-            // Jika aktivitas terakhir adalah kemarin, lanjutkan streak
             if ($lastActivity->isYesterday()) {
                 $user->streak_count += 1;
-            }
-            // Jika aktivitas terakhir bukan hari ini DAN bukan kemarin, reset streak ke 1
-            else if (!$lastActivity->isToday()) {
+            } else if (!$lastActivity->isToday()) {
                 $user->streak_count = 1;
             }
-            // Jika sudah bermain hari ini, streak tidak berubah, hanya update waktunya
         } else {
-            // Jika ini aktivitas pertama kali, mulai streak dari 1
             $user->streak_count = 1;
         }
-
-        // Selalu perbarui waktu aktivitas terakhir ke sekarang
         $user->last_activity_at = now();
         $user->save();
-        // --- AKHIR LOGIKA STREAK ---
 
-        // Pengecekan Achievement yang sudah ada
-        (new AchievementService())->checkAndAwardAchievements($user);
+        // 5. Logika Kontekstual Berdasarkan Tipe Kuis
+        $certificationAttempt = null; // Inisialisasi sebagai null
+        if ($quiz->type === 'lesson' && $score >= 80) {
+            $user->lessonProgress()->updateOrCreate(
+                ['user_id' => $user->id, 'lesson_id' => $quiz->lesson_id],
+                ['completed_at' => now()]
+            );
+        }
+        else if ($quiz->type === 'certification') {
+            $passed = $score >= 90;
+            $certificationAttempt = CertificationAttempt::create([
+                'user_id' => $user->id,
+                'score' => $score,
+                'passed' => $passed,
+                'completed_at' => now(),
+            ]);
 
+            return redirect()->route('sertifikasi.result.show', $certificationAttempt);
+        }
+
+        // 6. Cek & Berikan Achievement
+        (new AchievementService())->checkAndAwardAchievements($user, $quiz);
+
+        // 7. Kirim semua data ke Frontend
         return Inertia::render('Arena/Results', [
             'quiz' => $quiz,
             'score' => $score,
@@ -181,6 +197,7 @@ class ArenaController extends Controller
             'xpGained' => $xpGained,
             'levelUp' => $levelUp,
             'newLevel' => $levelAfter,
+            'certificationAttempt' => $certificationAttempt, // Kirim data hasil sertifikasi (bisa null)
         ]);
     }
 }

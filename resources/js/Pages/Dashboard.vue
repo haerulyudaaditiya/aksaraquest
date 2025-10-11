@@ -46,7 +46,7 @@ defineProps({
 
                     <hr class="my-8 border-slate-300 border-dashed">
                     <div class="flex flex-col sm:flex-row gap-4">
-                         <Link :href="route('atlas.index')" class="w-full text-center uppercase font-bold tracking-wider text-lg text-white bg-indigo-500 border-2 border-slate-800 rounded-xl py-3 px-6 shadow-[4px_4px_0_#1e293b] hover:bg-indigo-600 hover:-translate-y-0.5 active:translate-y-0 active:shadow-[2px_2px_0_#1e293b] transition-all">
+                         <Link :href="route('belajar.index')" class="w-full text-center uppercase font-bold tracking-wider text-lg text-white bg-indigo-500 border-2 border-slate-800 rounded-xl py-3 px-6 shadow-[4px_4px_0_#1e293b] hover:bg-indigo-600 hover:-translate-y-0.5 active:translate-y-0 active:shadow-[2px_2px_0_#1e293b] transition-all">
                             Lanjutkan Belajar
                         </Link>
                         <Link :href="route('arena.index')" class="w-full text-center uppercase font-bold tracking-wider text-lg text-slate-800 bg-white border-2 border-slate-800 rounded-xl py-3 px-6 shadow-[4px_4px_0_#d1d5db] hover:bg-slate-50 hover:-translate-y-0.5 active:translate-y-0 active:shadow-[2px_2px_0_#d1d5db] transition-all">

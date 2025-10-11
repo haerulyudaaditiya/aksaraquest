@@ -62,7 +62,7 @@ class FocusController extends Controller
         }
 
         // Buat sesi kuis baru dan lampirkan soal-soal latihan
-        $quiz = $user->quizzes()->create();
+        $quiz = $user->quizzes()->create(['type' => 'focus', 'aksara_id' => $aksara->id]);
         $quiz->questions()->attach($questions);
 
         // Arahkan ke halaman Arena yang sudah ada untuk mengerjakan kuis

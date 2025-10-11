@@ -52,7 +52,7 @@ class AksaraController extends Controller
             'audio_url' => $audioPath ? Storage::url($audioPath) : null, // Simpan URL publik
         ]);
 
-        return redirect()->route('admin.aksara.index');
+        return redirect()->route('admin.aksara.index')->with('success', 'Aksara baru berhasil ditambahkan.');
     }
 
     /**
@@ -81,7 +81,7 @@ class AksaraController extends Controller
         ]);
 
         // Kembalikan ke halaman daftar aksara
-        return redirect()->route('admin.aksara.index');
+        return redirect()->route('admin.aksara.index')->with('success', 'Data Aksara berhasil diperbarui.');
     }
 
     public function destroy(Aksara $aksara)
@@ -96,6 +96,6 @@ class AksaraController extends Controller
         // Hapus record dari database
         $aksara->delete();
 
-        return redirect()->route('admin.aksara.index');
+        return redirect()->route('admin.aksara.index')->with('success', 'Aksara berhasil dihapus.');
     }
 }

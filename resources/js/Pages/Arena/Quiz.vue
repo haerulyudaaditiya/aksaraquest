@@ -85,8 +85,17 @@ const progressPercentage = computed(
     <Head title="Quiz Berlangsung" />
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Quiz
+            <h2 v-if="quiz.type === 'lesson'" class="font-semibold text-xl text-gray-800 leading-tight">
+                Latihan: {{ quiz.lesson.title }}
+            </h2>
+            <h2 v-else-if="quiz.type === 'focus'" class="font-semibold text-xl text-gray-800 leading-tight">
+                Fokus Latihan: <span class="font-sunda">{{ quiz.aksara.character }}</span> ({{ quiz.aksara.latin }})
+            </h2>
+            <h2 v-else-if="quiz.type === 'certification'" class="font-semibold text-xl text-red-600 leading-tight animate-pulse">
+                UJIAN SERTIFIKASI
+            </h2>
+            <h2 v-else class="font-semibold text-xl text-gray-800 leading-tight">
+                Arena Latihan Acak
             </h2>
         </template>
         <div class="py-12 bg-slate-100">

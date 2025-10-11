@@ -11,6 +11,8 @@ use App\Models\UserSkillLevel;
 use App\Models\Achievement;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use App\Models\UserLessonProgress;
+use App\Models\Answer;
+use App\Models\CertificationAttempt;
 
 class User extends Authenticatable
 {
@@ -50,7 +52,7 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    protected $appends = ['level'];
+    protected $appends = ['level', 'has_certificate'];
 
     public function quizzes()
     {
@@ -89,4 +91,22 @@ class User extends Authenticatable
     {
         return $this->hasManyThrough(Answer::class, Quiz::class);
     }
+
+    public function lessonProgress()
+    {
+        return $this->hasMany(UserLessonProgress::class);
+    }
+
+    public function certificationAttempts()
+    {
+        return $this->hasMany(CertificationAttempt::class);
+    }
+
+    protected function hasCertificate(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->certificationAttempts()->where('passed', true)->exists()
+        );
+    }
+
 }

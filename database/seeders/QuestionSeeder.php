@@ -16,10 +16,8 @@ class QuestionSeeder extends Seeder
         $types = ['character_to_latin', 'latin_to_character', 'audio_to_latin', 'audio_to_character'];
 
         foreach ($aksaras as $correctAksara) {
-            // Buat beberapa soal untuk setiap aksara agar bank soal cukup
             for ($i = 0; $i < 2; $i++) {
                 foreach ($types as $type) {
-                    // Pastikan soal audio hanya dibuat jika ada file audionya
                     if (str_starts_with($type, 'audio_') && !$correctAksara->audio_url) {
                         continue;
                     }

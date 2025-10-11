@@ -18,6 +18,8 @@ class DatabaseSeeder extends Seeder
             AchievementSeeder::class,
             QuestionSeeder::class,
             UserSeeder::class,
+            ChapterSeeder::class,
+            LessonSeeder::class,
         ]);
     }
 }

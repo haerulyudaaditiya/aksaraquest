@@ -1,16 +1,22 @@
 <?php
 
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\ArenaController;
 use App\Http\Controllers\AtlasController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\AchievementController;
 use App\Http\Controllers\FocusController;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LearningPathController;
+use App\Http\Controllers\AchievementController;
+use App\Http\Controllers\LeaderboardController;
 use App\Http\Controllers\Admin\AksaraController as AdminAksaraController;
+use App\Http\Controllers\Admin\ChapterController as AdminChapterController;
+use App\Http\Controllers\Admin\LessonController as AdminLessonController;
+use App\Http\Controllers\Admin\QuestionController as AdminQuestionController;
+use App\Http\Controllers\CertificationController;
 
 
 Route::get('/', function () {
@@ -41,6 +47,18 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/fokus', [FocusController::class, 'index'])->name('fokus.index');
     Route::post('/fokus/latih/{aksara}', [FocusController::class, 'startPractice'])->name('fokus.startPractice');
+
+    Route::get('/belajar', [LearningPathController::class, 'index'])->name('belajar.index');
+    Route::post('/belajar/latihan/{lesson}', [LearningPathController::class, 'startLessonQuiz'])->name('belajar.quiz');
+    Route::get('/belajar/pelajaran/{lesson}', [LearningPathController::class, 'showLesson'])->name('belajar.lesson.show');
+
+    Route::get('/papan-peringkat', [LeaderboardController::class, 'index'])->name('leaderboard.index');
+});
+
+Route::middleware(['auth'])->prefix('sertifikasi')->name('sertifikasi.')->group(function () {
+    Route::post('/mulai', [CertificationController::class, 'startExam'])->name('start');
+    Route::get('/hasil/{attempt}', [CertificationController::class, 'showResult'])->name('result.show');
+    Route::get('/sertifikat-saya', [CertificationController::class, 'viewCertificate'])->name('view');
 });
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
@@ -50,6 +68,27 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/aksara/create', [AdminAksaraController::class, 'create'])->name('aksara.create');
     Route::post('/aksara', [AdminAksaraController::class, 'store'])->name('aksara.store');
     Route::delete('/aksara/{aksara}', [AdminAksaraController::class, 'destroy'])->name('aksara.destroy');
+
+    Route::get('/chapters', [AdminChapterController::class, 'index'])->name('chapters.index');
+    Route::get('/chapters/create', [AdminChapterController::class, 'create'])->name('chapters.create');
+    Route::post('/chapters', [AdminChapterController::class, 'store'])->name('chapters.store');
+    Route::get('/chapters/{chapter}/edit', [AdminChapterController::class, 'edit'])->name('chapters.edit');
+    Route::put('/chapters/{chapter}', [AdminChapterController::class, 'update'])->name('chapters.update');
+    Route::delete('/chapters/{chapter}', [AdminChapterController::class, 'destroy'])->name('chapters.destroy');
+
+    Route::get('/lessons', [AdminLessonController::class, 'index'])->name('lessons.index');
+    Route::get('/lessons/create', [AdminLessonController::class, 'create'])->name('lessons.create');
+    Route::post('/lessons', [AdminLessonController::class, 'store'])->name('lessons.store');
+    Route::get('/lessons/{lesson}/edit', [AdminLessonController::class, 'edit'])->name('lessons.edit');
+    Route::put('/lessons/{lesson}', [AdminLessonController::class, 'update'])->name('lessons.update');
+    Route::delete('/lessons/{lesson}', [AdminLessonController::class, 'destroy'])->name('lessons.destroy');
+
+    Route::get('/questions', [AdminQuestionController::class, 'index'])->name('questions.index');
+    Route::get('/questions/create', [AdminQuestionController::class, 'create'])->name('questions.create');
+    Route::post('/questions', [AdminQuestionController::class, 'store'])->name('questions.store');
+    Route::get('/questions/{question}/edit', [AdminQuestionController::class, 'edit'])->name('questions.edit');
+    Route::put('/questions/{question}', [AdminQuestionController::class, 'update'])->name('questions.update');
+    Route::delete('/questions/{question}', [AdminQuestionController::class, 'destroy'])->name('questions.destroy');
 });
 
 require __DIR__.'/auth.php';
