@@ -22,10 +22,13 @@ class AtlasController extends Controller
         ]);
     }
 
-    public function show(Aksara $aksara) // <-- Perhatikan di sini
+    public function show(Aksara $aksara)
     {
+        $aksara->load('lessons');
+
         return Inertia::render('Atlas/Show', [
-            'aksara' => $aksara
+            'aksara' => $aksara,
+            'lesson' => $aksara->lessons->first(),
         ]);
     }
 }

@@ -6,6 +6,7 @@ import SignaturePad from 'signature_pad';
 
 const props = defineProps({
     aksara: Object,
+    lesson: Object,
 });
 
 const playAudio = () => {
@@ -58,10 +59,16 @@ onBeforeUnmount(() => {
 
     <AuthenticatedLayout>
         <template #header>
-            <div class="flex items-center space-x-4">
-                <Link :href="route('atlas.index')" class="font-medium text-indigo-600 hover:text-indigo-800 transition">
-                    Galeri Aksara
+            <div class="flex items-center space-x-2 sm:space-x-4 text-sm sm:text-base">
+                <Link :href="route('belajar.index')" class="font-medium text-indigo-600 hover:text-indigo-800 transition">
+                    Jalur Pembelajaran
                 </Link>
+                <template v-if="lesson">
+                    <span class="text-gray-400">/</span>
+                    <Link :href="route('belajar.lesson.show', lesson.id)" class="font-medium text-indigo-600 hover:text-indigo-800 transition">
+                        {{ lesson.title }}
+                    </Link>
+                </template>
                 <span class="text-gray-400">/</span>
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight capitalize">
                     {{ aksara.latin }}
