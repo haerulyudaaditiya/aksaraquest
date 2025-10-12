@@ -1,61 +1,89 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# ᮓ AksaraQuest
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+![Screenshot Halaman Dashboard AksaraQuest](./images/screenshot.png)
 
-## About Laravel
+<h3 align="center">
+  <a href="https://aksaraquest.anopus.my.id" target="_blank">🚀 Buka Live Demo 🚀</a>
+</h3>
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+**AksaraQuest** adalah sebuah platform web _gamifikasi_ modern yang dirancang untuk merevitalisasi dan mempopulerkan kembali Aksara Sunda melalui pengalaman belajar yang interaktif, terstruktur, dan menyenangkan. Proyek ini dibangun dengan fokus pada detail, pengalaman pengguna yang memuaskan, dan fondasi teknis yang profesional.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+---
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 🚀 Filosofi Proyek
 
-## Learning Laravel
+Proyek ini lahir dari keinginan untuk menciptakan solusi atas kurangnya platform digital yang menarik bagi generasi muda untuk mempelajari Aksara Sunda. Dengan pendekatan seperti Duolingo, AksaraQuest mengubah proses belajar dari hafalan monoton menjadi sebuah petualangan yang memotivasi. Logo aplikasi ini menggunakan aksara **"Da" (ᮓ)**, yang melambangkan **"Dalan"** atau **"Jalan"**, merepresentasikan sebuah proses dan perjalanan belajar yang terstruktur di dalam aplikasi ini.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+---
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## ✨ Fitur Unggulan
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Aplikasi ini dikemas dengan fitur-fitur canggih untuk menciptakan ekosistem pembelajaran yang lengkap, dari pemula hingga mahir, dengan kontrol penuh bagi administrator.
 
-## Laravel Sponsors
+### Untuk Pengguna:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+-   **Jalur Pembelajaran Terstruktur**: Alur belajar seperti Duolingo yang memandu pengguna dari bab ke bab. Pelajaran baru akan terbuka hanya setelah pengguna lulus kuis dari pelajaran sebelumnya.
+-   **Arena Kuis Cerdas**:
+    -   **4 Tipe Soal Berbeda**: Kenali karakter, cari karakter, dengarkan & kenali nama, dengarkan & cari karakter.
+    -   **Sistem Adaptif**: Algoritma cerdas yang secara otomatis memberikan lebih banyak soal pada aksara yang menjadi kelemahan pengguna.
+-   **Mode Dongeng Interaktif**: Pengalaman membaca cerita rakyat Sunda dalam aksara asli, dengan fitur "klik-untuk-terjemahan" yang inovatif untuk melihat transliterasi Latin setiap kata.
+-   **Sistem Progresi Lengkap**:
+    -   **XP & Level**: Pengguna mendapatkan XP dari setiap kuis untuk menaikkan Level.
+    -   **Streak Harian**: Sistem "api" yang memberi penghargaan kepada pengguna karena belajar setiap hari berturut-turut untuk membangun kebiasaan.
+-   **Sistem Prestasi & Papan Peringkat**: Puluhan lencana (_achievement_) untuk berbagai pencapaian dan papan peringkat global untuk membandingkan total XP dan _streak_ terpanjang.
+-   **Latihan Fokus Personal**: Halaman khusus yang secara otomatis mendeteksi aksara terlemah pengguna dan menyediakan sesi latihan yang tertarget.
+-   **Ujian Sertifikasi**: Setelah semua pelajaran selesai, pengguna bisa mengambil ujian akhir komprehensif untuk mendapatkan sertifikat digital "Master Aksara Sunda" yang dapat diunduh.
 
-### Premium Partners
+### Untuk Admin:
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+-   **Panel Admin Komprehensif**: Antarmuka CRUD (Create, Read, Update, Delete) penuh yang memungkinkan admin mengelola **semua konten dinamis** aplikasi tanpa menyentuh kode, termasuk:
+    -   Manajemen Aksara (termasuk upload file audio).
+    -   Manajemen Kurikulum (Bab & Pelajaran).
+    -   Manajemen Bank Soal.
+    -   Manajemen Dongeng (termasuk editor konten kata per kata).
 
-## Contributing
+---
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## 🛠️ Dibangun Dengan Teknologi
 
-## Code of Conduct
+-   **Backend**: Laravel 12
+-   **Frontend**: Vue.js 3 & Inertia.js
+-   **Database**: MySQL
+-   **Styling**: Tailwind CSS
+-   **Lingkungan Pengembangan**: Docker (Laravel Sail)
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
 
-## Security Vulnerabilities
+## ⚙️ Instalasi & Setup (Lokal dengan Docker)
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+1.  _Clone_ repositori ini: `git clone https://github.com/haerulyudaaditiya/aksaraquest.git`
+2.  Masuk ke direktori: `cd aksaraquest`
+3.  Salin file environment: `cp .env.example .env`
+4.  Jalankan Docker Sail: `sail up -d`
+5.  Install dependensi:
+    ```bash
+    sail composer install
+    sail npm install --legacy-peer-deps
+    ```
+6.  Generate kunci aplikasi: `sail artisan key:generate`
+7.  Jalankan migrasi dan seeder untuk membangun database dan mengisi semua konten awal:
+    ```bash
+    sail artisan migrate:fresh --seed
+    ```
+8.  Jalankan server Vite untuk _hot-reloading_: `sail npm run dev`
+9.  Akses aplikasi di `http://localhost`.
 
-## License
+---
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## 🧑‍💻 Akun Demo
+
+Aplikasi ini sudah dilengkapi dengan data awal, termasuk dua akun pengguna untuk pengujian:
+
+-   **Akun Admin**:
+
+    -   **Email**: `admin@example.com`
+    -   **Password**: `password`
+
+-   **Akun Pengguna Biasa**:
+    -   **Email**: `user@example.com`
+    -   **Password**: `password`

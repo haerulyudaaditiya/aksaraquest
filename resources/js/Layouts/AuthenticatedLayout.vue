@@ -57,6 +57,12 @@ const user = usePage().props.auth.user;
                                     Fokus
                                 </NavLink>
                                 <NavLink
+                                    :href="route('dongeng.index')"
+                                    :active="route().current('dongeng.*')"
+                                >
+                                    Dongeng
+                                </NavLink>
+                                <NavLink
                                     :href="route('prestasi.index')"
                                     :active="route().current('prestasi.*')"
                                 >
@@ -237,6 +243,12 @@ const user = usePage().props.auth.user;
                             :active="route().current('fokus.*')"
                         >
                             Fokus
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            :href="route('dongeng.index')"
+                            :active="route().current('dongeng.*')"
+                        >
+                            Dongeng
                         </ResponsiveNavLink>
                         <ResponsiveNavLink
                             :href="route('prestasi.index')"

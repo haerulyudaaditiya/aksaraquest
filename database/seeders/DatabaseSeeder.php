@@ -20,6 +20,8 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             ChapterSeeder::class,
             LessonSeeder::class,
+            StorySeeder::class,      
+            StoryContentSeeder::class,
         ]);
     }
 }

@@ -17,6 +17,9 @@ use App\Http\Controllers\Admin\ChapterController as AdminChapterController;
 use App\Http\Controllers\Admin\LessonController as AdminLessonController;
 use App\Http\Controllers\Admin\QuestionController as AdminQuestionController;
 use App\Http\Controllers\CertificationController;
+use App\Http\Controllers\StoryController;
+use App\Http\Controllers\Admin\StoryController as AdminStoryController;
+use App\Http\Controllers\Admin\StoryContentController as AdminStoryContentController;
 
 
 Route::get('/', function () {
@@ -53,6 +56,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/belajar/pelajaran/{lesson}', [LearningPathController::class, 'showLesson'])->name('belajar.lesson.show');
 
     Route::get('/papan-peringkat', [LeaderboardController::class, 'index'])->name('leaderboard.index');
+
+    Route::get('/dongeng', [StoryController::class, 'index'])->name('dongeng.index');
+    Route::get('/dongeng/{story}', [StoryController::class, 'show'])->name('dongeng.show');
 });
 
 Route::middleware(['auth'])->prefix('sertifikasi')->name('sertifikasi.')->group(function () {
@@ -89,6 +95,12 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/questions/{question}/edit', [AdminQuestionController::class, 'edit'])->name('questions.edit');
     Route::put('/questions/{question}', [AdminQuestionController::class, 'update'])->name('questions.update');
     Route::delete('/questions/{question}', [AdminQuestionController::class, 'destroy'])->name('questions.destroy');
+
+    Route::resource('stories', AdminStoryController::class)->except(['show']);
+    Route::get('/stories/{story}/content', [AdminStoryContentController::class, 'index'])->name('stories.content.index');
+    Route::post('/stories/{story}/content', [AdminStoryContentController::class, 'store'])->name('stories.content.store');
+    Route::put('/story-contents/{content}', [AdminStoryContentController::class, 'update'])->name('story-contents.update');
+    Route::delete('/story-contents/{content}', [AdminStoryContentController::class, 'destroy'])->name('story-contents.destroy');
 });
 
 require __DIR__.'/auth.php';
