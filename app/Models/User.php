@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -13,10 +13,13 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use App\Models\UserLessonProgress;
 use App\Models\Answer;
 use App\Models\CertificationAttempt;
+use Laravel\Sanctum\HasApiTokens;
+use App\Notifications\VerifikasiEmailKustom;
+use App\Notifications\ResetPasswordKustom;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -107,6 +110,16 @@ class User extends Authenticatable
         return Attribute::make(
             get: fn () => $this->certificationAttempts()->where('passed', true)->exists()
         );
+    }
+
+    public function sendEmailVerificationNotification()
+    {
+        $this->notify(new VerifikasiEmailKustom);
+    }
+
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPasswordKustom($token));
     }
 
 }

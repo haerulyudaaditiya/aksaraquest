@@ -24,6 +24,7 @@ class UserSeeder extends Seeder
             'email_verified_at' => now(),
             'password' => Hash::make('password'),
             'role' => 'admin', // <-- Peran diatur sebagai 'admin'
+            'email_verified_at' => now(),
         ]);
 
         // 2. Buat Pengguna dengan Peran User Biasa
@@ -33,6 +34,7 @@ class UserSeeder extends Seeder
             'email_verified_at' => now(),
             'password' => Hash::make('password'),
             'role' => 'user', // <-- Peran diatur sebagai 'user'
+            'email_verified_at' => now(),
         ]);
     }
 }

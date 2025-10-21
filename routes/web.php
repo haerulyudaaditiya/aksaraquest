@@ -29,9 +29,9 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::middleware(['auth', 'verified'])->group(function () {
 
-Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::get('/atlas', [AtlasController::class, 'index'])->name('atlas.index');
     Route::get('/atlas/{aksara}', [AtlasController::class, 'show'])->name('atlas.show');
@@ -59,15 +59,19 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/dongeng', [StoryController::class, 'index'])->name('dongeng.index');
     Route::get('/dongeng/{story}', [StoryController::class, 'show'])->name('dongeng.show');
+
+    Route::post('sertifikat/mulai', [CertificationController::class, 'startExam'])->name('start');
+    Route::get('sertifikat/hasil/{attempt}', [CertificationController::class, 'showResult'])->name('result.show');
+    Route::get('sertifikat/sertifikat-saya', [CertificationController::class, 'viewCertificate'])->name('view');
 });
 
-Route::middleware(['auth'])->prefix('sertifikasi')->name('sertifikasi.')->group(function () {
-    Route::post('/mulai', [CertificationController::class, 'startExam'])->name('start');
-    Route::get('/hasil/{attempt}', [CertificationController::class, 'showResult'])->name('result.show');
-    Route::get('/sertifikat-saya', [CertificationController::class, 'viewCertificate'])->name('view');
-});
+// Route::middleware(['auth'])->prefix('sertifikasi')->name('sertifikasi.')->group(function () {
+//     Route::post('/mulai', [CertificationController::class, 'startExam'])->name('start');
+//     Route::get('/hasil/{attempt}', [CertificationController::class, 'showResult'])->name('result.show');
+//     Route::get('/sertifikat-saya', [CertificationController::class, 'viewCertificate'])->name('view');
+// });
 
-Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth', 'admin', 'verified'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/aksara', [AdminAksaraController::class, 'index'])->name('aksara.index');
     Route::get('/aksara/{aksara}/edit', [AdminAksaraController::class, 'edit'])->name('aksara.edit');
     Route::put('/aksara/{aksara}', [AdminAksaraController::class, 'update'])->name('aksara.update');

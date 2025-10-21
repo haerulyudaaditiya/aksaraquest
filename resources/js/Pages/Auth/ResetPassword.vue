@@ -33,13 +33,9 @@ const submit = () => {
 
 <template>
     <GuestLayout>
-        <Head title="Reset Password" />
-
-        <form @submit.prevent="submit">
+        <Head title="Atur Ulang Kata Sandi" /> <form @submit.prevent="submit">
             <div>
-                <InputLabel for="email" value="Email" />
-
-                <TextInput
+                <InputLabel for="email" value="Alamat Email" /> <TextInput
                     id="email"
                     type="email"
                     class="mt-1 block w-full"
@@ -53,9 +49,7 @@ const submit = () => {
             </div>
 
             <div class="mt-4">
-                <InputLabel for="password" value="Password" />
-
-                <TextInput
+                <InputLabel for="password" value="Kata Sandi Baru" /> <TextInput
                     id="password"
                     type="password"
                     class="mt-1 block w-full"
@@ -70,8 +64,7 @@ const submit = () => {
             <div class="mt-4">
                 <InputLabel
                     for="password_confirmation"
-                    value="Confirm Password"
-                />
+                    value="Konfirmasi Kata Sandi Baru" />
 
                 <TextInput
                     id="password_confirmation"
@@ -89,12 +82,8 @@ const submit = () => {
             </div>
 
             <div class="mt-4 flex items-center justify-end">
-                <PrimaryButton
-                    :class="{ 'opacity-25': form.processing }"
-                    :disabled="form.processing"
-                >
-                    Reset Password
-                </PrimaryButton>
+                <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                    Atur Ulang Kata Sandi </PrimaryButton>
             </div>
         </form>
     </GuestLayout>

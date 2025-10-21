@@ -31,17 +31,13 @@ const submit = () => {
 
 <template>
     <GuestLayout>
-        <Head title="Log in" />
-
-        <div v-if="status" class="mb-4 text-sm font-medium text-green-600">
+        <Head title="Masuk" /> <div v-if="status" class="mb-4 text-sm font-medium text-green-600">
             {{ status }}
         </div>
 
         <form @submit.prevent="submit">
             <div>
-                <InputLabel for="email" value="Email" />
-
-                <TextInput
+                <InputLabel for="email" value="Alamat Email" /> <TextInput
                     id="email"
                     type="email"
                     class="mt-1 block w-full"
@@ -55,9 +51,7 @@ const submit = () => {
             </div>
 
             <div class="mt-4">
-                <InputLabel for="password" value="Password" />
-
-                <TextInput
+                <InputLabel for="password" value="Kata Sandi" /> <TextInput
                     id="password"
                     type="password"
                     class="mt-1 block w-full"
@@ -69,13 +63,28 @@ const submit = () => {
                 <InputError class="mt-2" :message="form.errors.password" />
             </div>
 
-            <div class="mt-4 flex items-center justify-end">
+            <div class="block mt-4">
+                <label class="flex items-center">
+                    <Checkbox name="remember" v-model:checked="form.remember" />
+                    <span class="ms-2 text-sm text-gray-600">Ingat saya</span>
+                </label>
+            </div>
+
+            <div class="flex items-center justify-end mt-4">
+                <Link
+                    v-if="canResetPassword"
+                    :href="route('password.request')"
+                    class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                >
+                    Lupa kata sandi Anda?
+                </Link>
+
                 <PrimaryButton
                     class="ms-4"
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
                 >
-                    Log in
+                    Masuk
                 </PrimaryButton>
             </div>
         </form>
