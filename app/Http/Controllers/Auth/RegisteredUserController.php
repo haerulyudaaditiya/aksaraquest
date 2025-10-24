@@ -34,7 +34,13 @@ class RegisteredUserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
+            'g-recaptcha-response' => 'required|captcha',
+        ],
+            [
+                'g-recaptcha-response.required' => 'Captcha wajib diisi.',
+                'g-recaptcha-response.captcha' => 'Captcha tidak valid.',
+            ]
+        );
 
         $user = User::create([
             'name' => $request->name,

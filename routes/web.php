@@ -20,6 +20,7 @@ use App\Http\Controllers\CertificationController;
 use App\Http\Controllers\StoryController;
 use App\Http\Controllers\Admin\StoryController as AdminStoryController;
 use App\Http\Controllers\Admin\StoryContentController as AdminStoryContentController;
+use App\Http\Controllers\Auth\SocialLoginController;
 
 
 Route::get('/', function () {
@@ -28,6 +29,9 @@ Route::get('/', function () {
         'canRegister' => Route::has('register'),
     ]);
 });
+
+Route::get('/auth/google/redirect', [SocialLoginController::class, 'redirectToGoogle'])->name('login.google');
+Route::get('/auth/google/callback', [SocialLoginController::class, 'handleGoogleCallback']);
 
 Route::middleware(['auth', 'verified'])->group(function () {
 
