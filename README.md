@@ -72,18 +72,3 @@ Aplikasi ini dikemas dengan fitur-fitur canggih untuk menciptakan ekosistem pemb
     ```
 8.  Jalankan server Vite untuk _hot-reloading_: `sail npm run dev`
 9.  Akses aplikasi di `http://localhost`.
-
----
-
-## 🧑‍💻 Akun Demo
-
-Aplikasi ini sudah dilengkapi dengan data awal, termasuk dua akun pengguna untuk pengujian:
-
--   **Akun Admin**:
-
-    -   **Email**: `admin@example.com`
-    -   **Password**: `password`
-
--   **Akun Pengguna Biasa**:
-    -   **Email**: `user@example.com`
-    -   **Password**: `password`
