@@ -89,7 +89,7 @@ const progressPercentage = computed(
                 Latihan: {{ quiz.lesson.title }}
             </h2>
             <h2 v-else-if="quiz.type === 'focus'" class="font-semibold text-lg sm:text-xl text-gray-800 leading-tight">
-                Fokus Latihan: <span class="font-sunda">{{ quiz.aksara.character }}</span> ({{ quiz.aksara.latin }})
+                Tinjauan Latihan: <span class="font-sunda">{{ quiz.aksara.character }}</span> ({{ quiz.aksara.latin }})
             </h2>
             <h2 v-else-if="quiz.type === 'certification'" class="font-semibold text-lg sm:text-xl text-red-600 leading-tight animate-pulse">
                 UJIAN SERTIFIKASI

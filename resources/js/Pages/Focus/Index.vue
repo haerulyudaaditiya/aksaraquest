@@ -3,11 +3,13 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, Link } from '@inertiajs/vue3';
 import { onMounted } from 'vue';
 
+// --- PENYESUAIAN: Menerima 'dueAksara' dari controller ---
 defineProps({
     masteredAksara: Array,
-    weakAksara: Array,
+    dueAksara: Array, // <-- Mengganti nama 'weakAksara'
 });
 
+// --- Logika Animasi (Tidak Berubah) ---
 onMounted(() => {
     const observer = new IntersectionObserver(
         (entries) => {
@@ -21,7 +23,10 @@ onMounted(() => {
         { threshold: 0.1 }
     );
 
-    document.querySelectorAll('.fade-in-up').forEach((el) => observer.observe(el));
+    document.querySelectorAll('.fade-in-up').forEach((el, i) => {
+        el.style.animationDelay = `${i * 0.01}s`; 
+        observer.observe(el);
+    });
 });
 </script>
 
@@ -36,12 +41,13 @@ onMounted(() => {
     transform: translateY(0);
     }
 }
-
+.fade-in-up {
+    opacity: 0; /* Mulai transparan */
+}
 .animate-fade-in-up {
     animation: fade-in-up 0.6s ease-out forwards;
 }
-
-/* Efek hover ngangkat */
+/* Efek hover ngangkat (Tetap Ada) */
 .card-hover {
     transition: all 0.25s ease;
 }
@@ -52,18 +58,14 @@ onMounted(() => {
 </style>
 
 <template>
-    <Head title="Fokus Latihan" />
-
-    <AuthenticatedLayout>
+    <Head title="Tinjauan Harian" /> <AuthenticatedLayout>
     <template #header>
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">Fokus Latihan</h2>
-    </template>
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">Tinjauan Harian</h2> </template>
 
     <div class="py-8 sm:py-12 bg-slate-100 px-4">
         <div class="max-w-4xl mx-auto">
         <div class="bg-white border-2 border-slate-800 overflow-hidden shadow-[6px_6px_0_#1e293b] rounded-2xl p-4 sm:p-6">
 
-            <!-- PERLU DILATIH -->
             <div class="mb-8 fade-in-up">
             <div class="flex items-center gap-3 mb-4">
                 <div class="w-10 h-10 sm:w-12 sm:h-12 bg-indigo-100 rounded-xl border-2 border-slate-800 flex items-center justify-center">
@@ -74,22 +76,23 @@ onMounted(() => {
                 </svg>
                 </div>
                 <div>
-                <h3 class="text-xl sm:text-2xl font-extrabold text-slate-900">Perlu Dilatih</h3>
+                <h3 class="text-xl sm:text-2xl font-extrabold text-slate-900">Perlu Ditinjau</h3>
                 <p class="text-slate-600 text-sm sm:text-base">
-                    Fokuskan latihanmu pada aksara-aksara ini untuk penguasaan total.
+                    Aksara ini sudah jatuh tempo. Latih kembali untuk memperkuat ingatan jangka panjangmu!
                 </p>
                 </div>
             </div>
 
-            <div v-if="weakAksara.length > 0" class="space-y-4">
+            <div v-if="dueAksara.length > 0" class="space-y-4">
                 <div
-                v-for="aksara in weakAksara"
+                v-for="(aksara, index) in dueAksara"
                 :key="aksara.id"
                 class="fade-in-up card-hover bg-white border-2 border-slate-800 rounded-xl p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 shadow-[3px_3px_0_#1e293b]"
+                :style="{ animationDelay: `${index * 0.05}s` }"
                 >
                 <div class="flex items-center gap-4 flex-1">
                     <div class="text-5xl font-bold text-slate-700 font-sunda w-16 text-center">
-                    {{ aksara.character }}
+                        {{ aksara.character }}
                     </div>
                     <div class="flex flex-col justify-center">
                     <p class="text-xl sm:text-2xl font-bold text-indigo-600 capitalize">
@@ -101,36 +104,36 @@ onMounted(() => {
 
                 <div class="flex justify-end sm:justify-center">
                     <Link
-                    :href="route('fokus.startPractice', aksara.id)"
-                    method="post"
-                    as="button"
-                    class="uppercase font-bold tracking-wider text-xs sm:text-sm text-white bg-indigo-500 border-2 border-slate-800 rounded-lg py-2 px-5 shadow-[3px_3px_0_#1e293b] hover:bg-indigo-600 active:translate-y-[1px] transition-all"
+                        :href="route('fokus.startPractice', aksara.id)"
+                        method="post"
+                        as="button"
+                        class="uppercase font-bold tracking-wider text-xs sm:text-sm text-white bg-indigo-500 border-2 border-slate-800 rounded-lg py-2 px-5 shadow-[3px_3px_0_#1e293b] hover:bg-indigo-600 active:translate-y-[1px] transition-all"
                     >
-                    Latih
+                        Latih
                     </Link>
                 </div>
                 </div>
             </div>
 
             <div v-else class="fade-in-up bg-green-100 border-2 border-green-800 rounded-xl p-6 text-center">
-                <p class="font-bold text-green-900 text-lg sm:text-xl">Luar Biasa!</p>
+                <p class="font-bold text-green-900 text-lg sm:text-xl">Hebat!</p>
                 <p class="text-green-800 text-sm sm:text-base">
-                Anda telah menguasai semua aksara dasar. Teruslah berlatih di Arena untuk mempertahankannya.
+                    Kamu sudah menyelesaikan semua tinjauan untuk hari ini. Kembali lagi besok!
                 </p>
             </div>
             </div>
 
-            <!-- SUDAH DIKUASAI -->
-            <div class="fade-in-up">
-            <h3 class="text-xl sm:text-2xl font-extrabold text-slate-900 mb-4">Sudah Dikuasai</h3>
+            <div class="mt-8 fade-in-up">
+            <h3 class="text-xl sm:text-2xl font-extrabold text-slate-900 mb-4">Sudah Dikuasai (Belum Jatuh Tempo)</h3>
             <div
                 v-if="masteredAksara.length > 0"
                 class="flex flex-wrap gap-3 sm:gap-4 justify-center sm:justify-start"
             >
                 <div
-                v-for="aksara in masteredAksara"
+                v-for="(aksara, index) in masteredAksara"
                 :key="aksara.id"
                 class="fade-in-up card-hover bg-green-400 text-white border-2 border-green-800 rounded-xl p-4 flex flex-col items-center justify-center w-20 sm:w-24 h-20 sm:h-24 shadow-[3px_3px_0_#15803d]"
+                :style="{ animationDelay: `${index * 0.05}s` }"
                 >
                 <p class="text-3xl sm:text-4xl font-bold font-sunda">{{ aksara.character }}</p>
                 <p class="text-xs sm:text-sm font-bold capitalize">{{ aksara.latin }}</p>
@@ -138,7 +141,7 @@ onMounted(() => {
             </div>
             <div v-else>
                 <p class="text-slate-500 text-sm sm:text-base">
-                Teruslah berlatih di Arena untuk mulai menguasai aksara!
+                    Belum ada aksara yang dikuasai. Teruslah berlatih!
                 </p>
             </div>
             </div>

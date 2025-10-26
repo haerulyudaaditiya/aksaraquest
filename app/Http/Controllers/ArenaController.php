@@ -4,13 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Quiz;
 use App\Models\Question;
+use App\Models\Lesson;
+use App\Models\CertificationAttempt;
+use App\Models\Aksara;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Rule; // <-- Import Rule untuk validasi
+use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 use App\Services\AchievementService;
 use Carbon\Carbon;
-use App\Models\CertificationAttempt;
 use Illuminate\Support\Facades\Redirect;
 
 class ArenaController extends Controller
@@ -111,13 +113,40 @@ class ArenaController extends Controller
         ]);
 
         $skill = $quiz->user->skillLevels()->firstOrNew(['aksara_id' => $question->aksara_id]);
+
+        // Selalu catat kapan terakhir dilatih
+        $skill->last_practiced_at = now();
+
         if ($isCorrect) {
+            // Jika jawaban benar, tingkatkan streak dan perpanjang jadwal tinjauan
             $skill->correct_streak += 1;
-            if ($skill->correct_streak >= 3 && $skill->level < 2) { $skill->level = 2; }
-            else { $skill->level = 1; }
+
+            switch ($skill->correct_streak) {
+                case 1:
+                    $skill->level = 1; // Level "Belajar"
+                    $skill->next_review_at = now()->addDay(); // Tinjau 1 hari lagi
+                    break;
+                case 2:
+                    $skill->level = 1;
+                    $skill->next_review_at = now()->addDays(3); // Tinjau 3 hari lagi
+                    break;
+                case 3:
+                    $skill->level = 2; // Level "Dikuasai"
+                    $skill->next_review_at = now()->addDays(7); // Tinjau 1 minggu lagi
+                    break;
+                default:
+                    // Jika sudah master (streak > 3), perpanjang terus
+                    $skill->level = 2;
+                    $skill->next_review_at = now()->addMonth(); // Tinjau 1 bulan lagi
+            }
+
         } else {
+            // Jika jawaban salah, reset streak dan jadwalkan tinjauan ulang SEGERA
             $skill->correct_streak = 0;
+            $skill->level = 1; // Kembali ke level "Belajar"
+            $skill->next_review_at = now()->addHour(); // Harus segera ditinjau lagi.
         }
+
         $skill->save();
 
         return redirect()->route('arena.quiz.show', $quiz);

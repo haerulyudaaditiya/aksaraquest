@@ -17,27 +17,29 @@ class FocusController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $allAksara = Aksara::all();
-        $skillLevels = $user->skillLevels()->get()->keyBy('aksara_id');
 
-        $masteredAksara = [];
-        $weakAksara = [];
+        $skillLevels = $user->skillLevels()->get();
+        $dueAksaraIds = [];
+        $masteredAksaraIds = [];
 
-        foreach ($allAksara as $aksara) {
-            $skill = $skillLevels->get($aksara->id);
-
-            // Jika level skill 2 atau lebih, anggap sudah dikuasai
-            if ($skill && $skill->level >= 2) {
-                $masteredAksara[] = $aksara;
+        foreach ($skillLevels as $skill) {
+            if (is_null($skill->next_review_at) || $skill->next_review_at->isPast()) {
+                $dueAksaraIds[] = $skill->aksara_id;
             } else {
-                // Jika belum ada datanya atau level di bawah 2, anggap perlu dilatih
-                $weakAksara[] = $aksara;
+                $masteredAksaraIds[] = $skill->aksara_id;
             }
         }
 
+        $allAksaraIds = Aksara::pluck('id');
+        $practicedAksaraIds = $skillLevels->pluck('aksara_id');
+        $newAksaraIds = $allAksaraIds->diff($practicedAksaraIds);
+        $reviewAksaraIds = collect($dueAksaraIds)->merge($newAksaraIds);
+        $aksaraToReview = Aksara::whereIn('id', $reviewAksaraIds)->get();
+        $masteredAksara = Aksara::whereIn('id', $masteredAksaraIds)->get();
+
         return Inertia::render('Focus/Index', [
             'masteredAksara' => $masteredAksara,
-            'weakAksara' => $weakAksara,
+            'dueAksara' => $aksaraToReview, 
         ]);
     }
 

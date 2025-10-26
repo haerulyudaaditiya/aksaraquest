@@ -73,7 +73,7 @@ const secondaryActionText = computed(() => {
             : "Kembali ke Dashboard";
     }
     if (props.quiz.type === "lesson") return "Kembali ke Jalur Belajar";
-    if (props.quiz.type === "focus") return "Kembali ke Fokus";
+    if (props.quiz.type === "focus") return "Kembali ke Tinjauan";
     return "Selesai";
 });
 
