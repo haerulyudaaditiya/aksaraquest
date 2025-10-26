@@ -67,7 +67,11 @@ const primaryActionRoute = computed(() => {
 });
 
 const secondaryActionText = computed(() => {
-    if (props.quiz.type === "certification") return "Lihat Sertifikat"; // Placeholder
+    if (props.quiz.type === "certification") {
+        return props.certificationAttempt?.passed
+            ? "Lihat Sertifikat"
+            : "Kembali ke Dashboard";
+    }
     if (props.quiz.type === "lesson") return "Kembali ke Jalur Belajar";
     if (props.quiz.type === "focus") return "Kembali ke Fokus";
     return "Selesai";
@@ -79,6 +83,9 @@ const secondaryActionRoute = computed(() => {
         props.certificationAttempt?.passed
     ) {
         return route("sertifikasi.result.show", props.certificationAttempt.id);
+    }
+    if (props.quiz.type === "certification" && !props.certificationAttempt?.passed) {
+        return route("dashboard");
     }
     if (props.quiz.type === "lesson") return route("belajar.index");
     if (props.quiz.type === "focus") return route("fokus.index");

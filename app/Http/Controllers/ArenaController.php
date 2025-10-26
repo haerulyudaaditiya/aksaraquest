@@ -166,12 +166,15 @@ class ArenaController extends Controller
         $user->save();
 
         // 5. Logika Kontekstual Berdasarkan Tipe Kuis
-        $certificationAttempt = null; // Inisialisasi sebagai null
+        $certificationAttempt = null;
+        $flashMessage = '';
+
         if ($quiz->type === 'lesson' && $score >= 80) {
             $user->lessonProgress()->updateOrCreate(
                 ['user_id' => $user->id, 'lesson_id' => $quiz->lesson_id],
                 ['completed_at' => now()]
             );
+            $flashMessage = 'win';
         }
         else if ($quiz->type === 'certification') {
             $passed = $score >= 90;
@@ -182,7 +185,11 @@ class ArenaController extends Controller
                 'completed_at' => now(),
             ]);
 
-            return redirect()->route('sertifikasi.result.show', $certificationAttempt);
+            $flashMessage = $passed ? 'win' : 'lose';
+
+        }
+        else {
+            $flashMessage = $score >= 80 ? 'win' : 'lose';
         }
 
         // 6. Cek & Berikan Achievement
@@ -197,7 +204,7 @@ class ArenaController extends Controller
             'xpGained' => $xpGained,
             'levelUp' => $levelUp,
             'newLevel' => $levelAfter,
-            'certificationAttempt' => $certificationAttempt, // Kirim data hasil sertifikasi (bisa null)
-        ]);
+            'certificationAttempt' => $certificationAttempt,
+        ])->with('playSound', $flashMessage);
     }
 }
