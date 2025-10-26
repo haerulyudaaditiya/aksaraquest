@@ -223,7 +223,7 @@ onUnmounted(() => window.removeEventListener("mousemove", handleMouseMove));
         <!-- FOOTER -->
         <footer class="bg-white py-8 text-center border-t-2 border-slate-800">
             <p class="text-slate-500 text-xs sm:text-sm">
-                © {{ new Date().getFullYear() }} AksaraQuest. Dibuat dengan oleh Haerul Yuda Aditiya.
+                © {{ new Date().getFullYear() }} AksaraQuest. Dibuat oleh Haerul Yuda Aditiya.
             </p>
         </footer>
     </div>

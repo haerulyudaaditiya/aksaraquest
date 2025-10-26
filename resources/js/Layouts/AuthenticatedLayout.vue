@@ -278,6 +278,12 @@ const user = usePage().props.auth.user;
                                 Profil
                             </ResponsiveNavLink>
                             <ResponsiveNavLink
+                                v-if="user.has_certificate"
+                                :href="route('sertifikasi.view')"
+                            >
+                                Sertifikat Saya
+                            </ResponsiveNavLink>
+                            <ResponsiveNavLink
                                 :href="route('logout')"
                                 method="post"
                                 as="button"

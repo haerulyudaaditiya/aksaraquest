@@ -85,28 +85,28 @@ const progressPercentage = computed(
     <Head title="Quiz Berlangsung" />
     <AuthenticatedLayout>
         <template #header>
-            <h2 v-if="quiz.type === 'lesson'" class="font-semibold text-xl text-gray-800 leading-tight">
+            <h2 v-if="quiz.type === 'lesson'" class="font-semibold text-lg sm:text-xl text-gray-800 leading-tight">
                 Latihan: {{ quiz.lesson.title }}
             </h2>
-            <h2 v-else-if="quiz.type === 'focus'" class="font-semibold text-xl text-gray-800 leading-tight">
+            <h2 v-else-if="quiz.type === 'focus'" class="font-semibold text-lg sm:text-xl text-gray-800 leading-tight">
                 Fokus Latihan: <span class="font-sunda">{{ quiz.aksara.character }}</span> ({{ quiz.aksara.latin }})
             </h2>
-            <h2 v-else-if="quiz.type === 'certification'" class="font-semibold text-xl text-red-600 leading-tight animate-pulse">
+            <h2 v-else-if="quiz.type === 'certification'" class="font-semibold text-lg sm:text-xl text-red-600 leading-tight animate-pulse">
                 UJIAN SERTIFIKASI
             </h2>
-            <h2 v-else class="font-semibold text-xl text-gray-800 leading-tight">
+            <h2 v-else class="font-semibold text-lg sm:text-xl text-gray-800 leading-tight">
                 Arena Latihan Acak
             </h2>
         </template>
-        <div class="py-12 bg-slate-100">
-            <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
+        <div class="py-8 sm:py-12 bg-slate-100">
+            <div class="max-w-md sm:max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="mb-4">
-                    <p class="text-lg text-slate-600 font-bold mb-2">
+                    <p class="text-base sm:text-lg text-slate-600 font-bold mb-2 text-center sm:text-left">
                         Pertanyaan {{ answeredCount + 1 }} dari
                         {{ totalQuestions }}
                     </p>
                     <div
-                        class="bg-slate-200 rounded-full h-5 border-2 border-slate-800 shadow-[4px_4px_0_#1e293b]"
+                        class="bg-slate-200 rounded-full h-4 sm:h-5 border-2 border-slate-800 shadow-[4px_4px_0_#1e293b]"
                     >
                         <div
                             class="bg-green-500 h-full rounded-full transition-all duration-500"
@@ -116,30 +116,28 @@ const progressPercentage = computed(
                 </div>
 
                 <div
-                    class="bg-white border-2 border-slate-800 overflow-hidden shadow-[8px_8px_0_#1e293b] sm:rounded-2xl"
+                    class="bg-white border-2 border-slate-800 overflow-hidden shadow-[8px_8px_0_#1e293b] rounded-2xl"
                 >
-                    <div class="p-8">
+                    <div class="p-6 sm:p-8">
                         <div v-if="question" class="text-center mb-8">
-                            <h3 class="text-2xl font-bold text-slate-900 mb-4">
+                            <h3 class="text-xl sm:text-2xl font-bold text-slate-900 mb-4">
                                 {{ question.body }}
                             </h3>
 
-                            <div class="h-48 flex items-center justify-center">
+                            <div class="h-40 sm:h-48 flex items-center justify-center">
                                 <div
-                                    v-if="
-                                        question.type === 'character_to_latin'
-                                    "
-                                    class="text-9xl font-bold text-slate-800 font-sunda"
+                                    v-if="question.type === 'character_to_latin'"
+                                    class="text-8xl sm:text-9xl font-bold text-slate-800 font-sunda"
                                 >
                                     {{ question.character }}
                                 </div>
                                 <button
                                     v-if="question.type.startsWith('audio_')"
                                     @click="playQuestionAudio"
-                                    class="text-indigo-500 border-4 border-indigo-500 rounded-full p-8 transition hover:bg-indigo-50"
+                                    class="text-indigo-500 border-4 border-indigo-500 rounded-full p-6 sm:p-8 transition active:scale-95"
                                 >
                                     <svg
-                                        class="h-16 w-16"
+                                        class="h-12 w-12 sm:h-16 sm:w-16"
                                         xmlns="http://www.w3.org/2000/svg"
                                         viewBox="0 0 24 24"
                                         fill="currentColor"
@@ -150,13 +148,11 @@ const progressPercentage = computed(
                                     </svg>
                                 </button>
                                 <div
-                                    v-if="
-                                        question.type === 'latin_to_character'
-                                    "
+                                    v-if="question.type === 'latin_to_character'"
                                     class="text-slate-300"
                                 >
                                     <svg
-                                        class="h-32 w-32"
+                                        class="h-24 w-24 sm:h-32 sm:w-32"
                                         xmlns="http://www.w3.org/2000/svg"
                                         fill="none"
                                         viewBox="0 0 24 24"
@@ -173,22 +169,16 @@ const progressPercentage = computed(
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                             <button
                                 v-for="option in question.options"
                                 :key="option"
                                 @click="submitAnswer(option)"
                                 :disabled="isSubmitting"
-                                :class="[
-                                    buttonClass(option),
-                                    {
-                                        'font-sunda text-4xl':
-                                            question.type.endsWith(
-                                                '_character'
-                                            ),
-                                    },
+                                :class="[ buttonClass(option),
+                                    'w-full uppercase font-bold tracking-wider text-slate-800 border-2 border-slate-800 rounded-2xl p-4 text-center transition duration-150',
+                                    { 'font-sunda text-4xl': question.type.endsWith('_character') }
                                 ]"
-                                class="w-full uppercase font-bold tracking-wider text-slate-800 border-2 border-slate-800 rounded-xl p-4 text-center hover:-translate-y-0.5 transition-all duration-150"
                             >
                                 {{ option }}
                             </button>

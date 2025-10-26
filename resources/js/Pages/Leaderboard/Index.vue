@@ -32,16 +32,25 @@ onMounted(() => {
 <style scoped>
 @keyframes fade-in-up {
     0% {
-    opacity: 0;
-    transform: translateY(20px);
+        opacity: 0;
+        transform: translateY(20px);
     }
     100% {
-    opacity: 1;
-    transform: translateY(0);
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 .animate-fade-in-up {
     animation: fade-in-up 0.6s ease-out forwards;
+}
+
+/* Efek hover mengangkat */
+.user-item {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.user-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 4px 4px 0 #1e293b;
 }
 </style>
 
@@ -70,11 +79,12 @@ onMounted(() => {
                                 <p class="text-slate-600 text-sm sm:text-base">Para pembelajar paling berdedikasi!</p>
                             </div>
                         </div>
+
                         <ul class="space-y-3 sm:space-y-4">
                             <li
                                 v-for="(user, index) in topXpUsers"
                                 :key="user.id"
-                                class="fade-in-up flex items-center justify-between bg-slate-50 border-2 border-slate-800 rounded-xl p-3 sm:p-4"
+                                class="fade-in-up user-item flex items-center justify-between bg-slate-50 border-2 border-slate-800 rounded-xl p-3 sm:p-4"
                             >
                                 <div class="flex items-center gap-3 sm:gap-4">
                                     <div class="font-bold text-slate-500 text-lg sm:text-xl w-6 sm:w-8 text-center">
@@ -105,11 +115,12 @@ onMounted(() => {
                                 <p class="text-slate-600 text-sm sm:text-base">Para pembelajar paling konsisten!</p>
                             </div>
                         </div>
+
                         <ul class="space-y-3 sm:space-y-4">
                             <li
                                 v-for="(user, index) in topStreakUsers"
                                 :key="user.id"
-                                class="fade-in-up flex items-center justify-between bg-slate-50 border-2 border-slate-800 rounded-xl p-3 sm:p-4"
+                                class="fade-in-up user-item flex items-center justify-between bg-slate-50 border-2 border-slate-800 rounded-xl p-3 sm:p-4"
                             >
                                 <div class="flex items-center gap-3 sm:gap-4">
                                     <div class="font-bold text-slate-500 text-lg sm:text-xl w-6 sm:w-8 text-center">

@@ -55,7 +55,7 @@ onMounted(() => {
                         v-for="story in stories"
                         :key="story.id"
                         :href="route('dongeng.show', story.id)"
-                        class="fade-in-up group block bg-white border-2 border-slate-800 rounded-2xl overflow-hidden shadow-[6px_6px_0_#1e293b] sm:shadow-[8px_8px_0_#1e293b] hover:shadow-[8px_8px_0_#4f46e5] hover:-translate-y-2 transition-all duration-500"
+                        class="fade-in-up group block bg-white border-2 border-slate-800 rounded-2xl overflow-hidden shadow-[6px_6px_0_#1e293b] sm:shadow-[8px_8px_0_#1e293b] hover:shadow-[10px_10px_0_#1e293b] hover:-translate-y-2 transition-all duration-500"
                     >
                         <div class="overflow-hidden">
                             <img
