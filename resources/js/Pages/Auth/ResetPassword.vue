@@ -33,58 +33,62 @@ const submit = () => {
 
 <template>
     <GuestLayout>
-        <Head title="Atur Ulang Kata Sandi" /> <form @submit.prevent="submit">
-            <div>
-                <InputLabel for="email" value="Alamat Email" /> <TextInput
-                    id="email"
-                    type="email"
-                    class="mt-1 block w-full"
-                    v-model="form.email"
-                    required
-                    autofocus
-                    autocomplete="username"
-                />
+        <Head title="Atur Ulang Kata Sandi" />
 
-                <InputError class="mt-2" :message="form.errors.email" />
-            </div>
+        <div class="max-w-md mx-auto bg-white p-6 rounded-lg shadow-sm">
+            <h2 class="text-center text-2xl font-semibold mb-4">Atur Ulang Kata Sandi</h2>
 
-            <div class="mt-4">
-                <InputLabel for="password" value="Kata Sandi Baru" /> <TextInput
-                    id="password"
-                    type="password"
-                    class="mt-1 block w-full"
-                    v-model="form.password"
-                    required
-                    autocomplete="new-password"
-                />
+            <form @submit.prevent="submit">
+                <div>
+                    <InputLabel for="email" value="Alamat Email" />
+                    <TextInput
+                        id="email"
+                        type="email"
+                        class="mt-1 block w-full"
+                        v-model="form.email"
+                        required
+                        autofocus
+                        autocomplete="username"
+                    />
+                    <InputError class="mt-2" :message="form.errors.email" />
+                </div>
 
-                <InputError class="mt-2" :message="form.errors.password" />
-            </div>
+                <div class="mt-4">
+                    <InputLabel for="password" value="Kata Sandi Baru" />
+                    <TextInput
+                        id="password"
+                        type="password"
+                        class="mt-1 block w-full"
+                        v-model="form.password"
+                        required
+                        autocomplete="new-password"
+                    />
+                    <InputError class="mt-2" :message="form.errors.password" />
+                </div>
 
-            <div class="mt-4">
-                <InputLabel
-                    for="password_confirmation"
-                    value="Konfirmasi Kata Sandi Baru" />
+                <div class="mt-4">
+                    <InputLabel for="password_confirmation" value="Konfirmasi Kata Sandi Baru" />
+                    <TextInput
+                        id="password_confirmation"
+                        type="password"
+                        class="mt-1 block w-full"
+                        v-model="form.password_confirmation"
+                        required
+                        autocomplete="new-password"
+                    />
+                    <InputError class="mt-2" :message="form.errors.password_confirmation" />
+                </div>
 
-                <TextInput
-                    id="password_confirmation"
-                    type="password"
-                    class="mt-1 block w-full"
-                    v-model="form.password_confirmation"
-                    required
-                    autocomplete="new-password"
-                />
-
-                <InputError
-                    class="mt-2"
-                    :message="form.errors.password_confirmation"
-                />
-            </div>
-
-            <div class="mt-4 flex items-center justify-end">
-                <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Atur Ulang Kata Sandi </PrimaryButton>
-            </div>
-        </form>
+                <div class="mt-6">
+                    <PrimaryButton
+                        class="w-full justify-center"
+                        :class="{ 'opacity-25': form.processing }"
+                        :disabled="form.processing"
+                    >
+                        Atur Ulang Kata Sandi
+                    </PrimaryButton>
+                </div>
+            </form>
+        </div>
     </GuestLayout>
 </template>
