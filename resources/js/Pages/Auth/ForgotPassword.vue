@@ -23,33 +23,44 @@ const submit = () => {
 
 <template>
     <GuestLayout>
-        <Head title="Lupa Kata Sandi" /> <div class="mb-4 text-sm text-gray-600">
-            Lupa kata sandi Anda? Tidak masalah. Cukup beritahu kami alamat email Anda dan kami akan mengirimkan tautan untuk mengatur ulang kata sandi yang memungkinkan Anda memilih yang baru.
-        </div>
+        <Head title="Lupa Kata Sandi" />
 
-        <div v-if="status" class="mb-4 text-sm font-medium text-green-600">
-            {{ status }}
-        </div>
+        <div class="w-full px-4 py-8 sm:max-w-md sm:mx-auto sm:bg-white sm:rounded-xl sm:shadow-md sm:p-8">
+            <h2 class="text-xl sm:text-2xl font-semibold text-center text-gray-800 mb-4">
+                Lupa Kata Sandi
+            </h2>
 
-        <form @submit.prevent="submit">
-            <div>
-                <InputLabel for="email" value="Alamat Email" /> <TextInput
-                    id="email"
-                    type="email"
-                    class="mt-1 block w-full"
-                    v-model="form.email"
-                    required
-                    autofocus
-                    autocomplete="username"
-                />
+            <p class="mb-4 text-sm text-gray-600 leading-relaxed text-center sm:text-left">
+                Lupa kata sandi Anda? Tidak masalah. Masukkan alamat email Anda dan kami akan mengirimkan tautan untuk mengatur ulang kata sandi Anda.
+            </p>
 
-                <InputError class="mt-2" :message="form.errors.email" />
+            <div v-if="status" class="mb-4 text-sm font-medium text-green-600 text-center">
+                {{ status }}
             </div>
 
-            <div class="flex items-center justify-end mt-4">
-                <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Kirim Tautan Atur Ulang </PrimaryButton>
-            </div>
-        </form>
+            <form @submit.prevent="submit" class="space-y-4">
+                <div>
+                    <InputLabel for="email" value="Alamat Email" />
+                    <TextInput
+                        id="email"
+                        type="email"
+                        class="mt-1 block w-full"
+                        v-model="form.email"
+                        required
+                        autofocus
+                        autocomplete="username"
+                    />
+                    <InputError class="mt-2" :message="form.errors.email" />
+                </div>
+
+                <PrimaryButton
+                    class="w-full justify-center mt-2"
+                    :class="{ 'opacity-25': form.processing }"
+                    :disabled="form.processing"
+                >
+                    Kirim Tautan Atur Ulang
+                </PrimaryButton>
+            </form>
+        </div>
     </GuestLayout>
 </template>
