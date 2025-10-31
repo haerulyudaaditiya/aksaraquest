@@ -118,7 +118,7 @@ onMounted(() => {
                     <InputError class="mt-2" :message="form.errors.password" />
                 </div>
 
-                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                <div class="flex items-center justify-between flex-wrap gap-y-2">
                     <label class="flex items-center">
                         <Checkbox name="remember" v-model:checked="form.remember" />
                         <span class="ml-2 text-sm text-gray-600">Ingat saya</span>
@@ -127,7 +127,7 @@ onMounted(() => {
                     <Link
                         v-if="canResetPassword"
                         :href="route('password.request')"
-                        class="text-sm text-indigo-600 hover:text-indigo-800 font-medium text-center sm:text-right"
+                        class="text-sm text-indigo-600 hover:text-indigo-800 font-medium"
                     >
                         Lupa kata sandi?
                     </Link>
