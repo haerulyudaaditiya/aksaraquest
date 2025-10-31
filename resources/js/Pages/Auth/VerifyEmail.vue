@@ -23,32 +23,44 @@ const verificationLinkSent = computed(
 
 <template>
     <GuestLayout>
-        <Head title="Verifikasi Email" /> <div class="mb-4 text-sm text-gray-600">
-            Terima kasih sudah mendaftar! Sebelum memulai, bisakah Anda memverifikasi alamat email Anda dengan mengeklik tautan yang baru saja kami kirimkan ke email Anda? Jika Anda tidak menerima email tersebut, kami akan dengan senang hati mengirimkan yang lain.
-        </div>
+        <Head title="Verifikasi Email" />
 
-        <div
-            class="mb-4 text-sm font-medium text-green-600"
-            v-if="verificationLinkSent"
-        >
-            Tautan verifikasi baru telah dikirim ke alamat email yang Anda berikan saat pendaftaran.
-        </div>
+        <div class="max-w-md mx-auto bg-white p-6 rounded-lg shadow-sm">
+            <h2 class="text-center text-2xl font-semibold mb-4">Verifikasi Email</h2>
 
-        <form @submit.prevent="submit">
-            <div class="mt-4 flex items-center justify-between">
+            <p class="text-sm text-gray-600 mb-4 leading-relaxed">
+                Terima kasih sudah mendaftar! Sebelum memulai, silakan verifikasi alamat email Anda
+                dengan mengeklik tautan yang baru saja kami kirimkan. Jika belum menerima email,
+                kami dapat mengirimkan yang baru.
+            </p>
+
+            <div
+                v-if="verificationLinkSent"
+                class="mb-4 text-sm font-medium text-green-600 bg-green-50 p-3 rounded-md text-center"
+            >
+                Tautan verifikasi baru telah dikirim ke alamat email yang Anda gunakan saat pendaftaran.
+            </div>
+
+            <form @submit.prevent="submit" class="space-y-4">
                 <PrimaryButton
+                    class="w-full justify-center"
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
                 >
-                    Kirim Ulang Email Verifikasi </PrimaryButton>
+                    Kirim Ulang Email Verifikasi
+                </PrimaryButton>
 
-                <Link
-                    :href="route('logout')"
-                    method="post"
-                    as="button"
-                    class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                    >Keluar</Link >
-            </div>
-        </form>
+                <div class="text-center">
+                    <Link
+                        :href="route('logout')"
+                        method="post"
+                        as="button"
+                        class="text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                    >
+                        Keluar
+                    </Link>
+                </div>
+            </form>
+        </div>
     </GuestLayout>
 </template>
