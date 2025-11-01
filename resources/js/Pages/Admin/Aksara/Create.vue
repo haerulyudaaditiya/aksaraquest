@@ -16,6 +16,14 @@ const form = useForm({
 const submit = () => {
     form.post(route('admin.aksara.store'));
 };
+
+const handleFileInput = (event) => {
+    if (event.target.files.length > 0) {
+        form.audio = event.target.files[0];
+    } else {
+        form.audio = null;
+    }
+};
 </script>
 
 <template>
@@ -28,8 +36,8 @@ const submit = () => {
         </template>
 
         <div class="py-12 bg-slate-100">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white border-2 border-slate-800 overflow-hidden shadow-[8px_8px_0_#1e293b] sm:rounded-2xl p-6 sm:p-8">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="bg-white border-2 border-slate-800 overflow-hidden shadow-[8px_8px_0_#1e293b] rounded-2xl p-6 sm:p-8">
                     <form @submit.prevent="submit" class="max-w-2xl space-y-6">
                         <div>
                             <InputLabel for="character" value="Karakter Aksara" class="font-bold" />
@@ -48,7 +56,7 @@ const submit = () => {
                         </div>
                         <div>
                             <InputLabel for="audio" value="File Audio (.mp3)" class="font-bold" />
-                            <input id="audio" @input="form.audio = $event.target.files[0]" type="file" accept=".mp3" class="mt-1 block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100"/>
+                            <input id="audio" @input="handleFileInput" type="file" accept=".mp3" class="mt-1 block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100"/>
                             <InputError :message="form.errors.audio" class="mt-2" />
                         </div>
                         <div class="flex items-center gap-4">
