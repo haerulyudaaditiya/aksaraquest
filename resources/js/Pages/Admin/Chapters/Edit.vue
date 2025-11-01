@@ -27,8 +27,8 @@ const submit = () => {
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">Edit Bab: {{ chapter.title }}</h2>
         </template>
         <div class="py-12 bg-slate-100">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white border-2 border-slate-800 overflow-hidden shadow-[8px_8px_0_#1e293b] sm:rounded-2xl p-6 sm:p-8">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="bg-white border-2 border-slate-800 overflow-hidden shadow-[8px_8px_0_#1e293b] rounded-2xl p-6 sm:p-8">
                     <form @submit.prevent="submit" class="max-w-2xl space-y-6">
                         <div>
                             <InputLabel for="title" value="Judul Bab" class="font-bold" />
@@ -47,6 +47,10 @@ const submit = () => {
                         </div>
                         <div class="flex items-center gap-4">
                             <PrimaryButton :disabled="form.processing">Simpan Perubahan</PrimaryButton>
+
+                            <Transition enter-from-class="opacity-0" leave-to-class="opacity-0" class="transition ease-in-out">
+                                <p v-if="form.recentlySuccessful" class="text-sm text-green-600 font-bold">Tersimpan.</p>
+                            </Transition>
                         </div>
                     </form>
                 </div>
