@@ -28,8 +28,8 @@ const submit = () => {
         </template>
 
         <div class="py-12 bg-slate-100">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white border-2 border-slate-800 overflow-hidden shadow-[8px_8px_0_#1e293b] sm:rounded-2xl p-6 sm:p-8">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="bg-white border-2 border-slate-800 overflow-hidden shadow-[8px_8px_0_#1e293b] rounded-2xl p-6 sm:p-8">
                     <form @submit.prevent="submit" class="max-w-2xl">
                         <div>
                             <InputLabel for="philosophy" value="Filosofi & Makna" class="font-bold mb-1" />
