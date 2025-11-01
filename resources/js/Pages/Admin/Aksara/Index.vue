@@ -42,72 +42,84 @@ const closeModal = () => {
         </template>
 
         <div class="py-12 bg-slate-100">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="mb-6 text-right">
-                    <Link :href="route('admin.aksara.create')"
-                        ><PrimaryButton>Tambah Aksara Baru</PrimaryButton></Link
-                    >
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 px-4">
+                <div class="mb-6 sm:text-right">
+                    <Link :href="route('admin.aksara.create')">
+                        <PrimaryButton class="w-full sm:w-auto">
+                            Tambah Aksara Baru
+                        </PrimaryButton>
+                    </Link>
                 </div>
+
                 <div
-                    class="bg-white border-2 border-slate-800 overflow-hidden shadow-[8px_8px_0_#1e293b] sm:rounded-2xl"
+                    class="bg-white border-2 border-slate-800 overflow-hidden shadow-[8px_8px_0_#1e293b] rounded-2xl"
                 >
                     <div class="p-6 sm:p-8">
-                        <table class="w-full">
-                            <thead class="border-b-2 border-slate-800">
-                                <tr>
-                                    <th
-                                        class="text-left p-3 font-extrabold text-slate-900"
-                                    >
-                                        Aksara
-                                    </th>
-                                    <th
-                                        class="text-left p-3 font-extrabold text-slate-900"
-                                    >
-                                        Latin
-                                    </th>
-                                    <th
-                                        class="text-left p-3 font-extrabold text-slate-900"
-                                    >
-                                        Aksi
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr
-                                    v-for="aksara in aksaras"
-                                    :key="aksara.id"
-                                    class="border-b border-slate-200 hover:bg-slate-50"
-                                >
-                                    <td class="p-3 font-sunda text-3xl">
-                                        {{ aksara.character }}
-                                    </td>
-                                    <td
-                                        class="p-3 font-bold text-lg capitalize"
-                                    >
-                                        {{ aksara.latin }}
-                                    </td>
-                                    <td class="p-3 space-x-4">
-                                        <Link
-                                            :href="
-                                                route(
-                                                    'admin.aksara.edit',
-                                                    aksara.id
-                                                )
-                                            "
-                                            class="font-bold text-indigo-600 hover:underline"
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full">
+                                <thead class="border-b-2 border-slate-800">
+                                    <tr>
+                                        <th
+                                            class="text-left p-3 font-extrabold text-slate-900"
                                         >
-                                            Edit
-                                        </Link>
-                                        <button
-                                            @click="confirmDeletion(aksara)"
-                                            class="font-bold text-red-600 hover:underline"
+                                            Aksara
+                                        </th>
+                                        <th
+                                            class="text-left p-3 font-extrabold text-slate-900"
                                         >
-                                            Hapus
-                                        </button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                                            Latin
+                                        </th>
+                                        <th
+                                            class="text-left p-3 font-extrabold text-slate-900 w-1 whitespace-nowrap"
+                                        >
+                                            Aksi
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr
+                                        v-for="aksara in aksaras"
+                                        :key="aksara.id"
+                                        class="border-b border-slate-200 hover:bg-slate-50"
+                                    >
+                                        <td class="p-3 font-sunda text-3xl">
+                                            {{ aksara.character }}
+                                        </td>
+                                        <td
+                                            class="p-3 font-bold text-lg capitalize"
+                                        >
+                                            {{ aksara.latin }}
+                                        </td>
+                                        <td class="p-3 space-x-4 whitespace-nowrap">
+                                            <Link
+                                                :href="
+                                                    route(
+                                                        'admin.aksara.edit',
+                                                        aksara.id
+                                                    )
+                                                "
+                                                class="font-bold text-indigo-600 hover:underline"
+                                            >
+                                                Edit
+                                            </Link>
+                                            <button
+                                                @click="confirmDeletion(aksara)"
+                                                class="font-bold text-red-600 hover:underline"
+                                            >
+                                                Hapus
+                                            </button>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Jika tidak ada data -->
+                                    <tr v-if="aksaras.length === 0">
+                                        <td colspan="3" class="p-8 text-center text-slate-500">
+                                            Belum ada data aksara.
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
