@@ -20,6 +20,7 @@ const form = useForm({
 });
 
 // Helper untuk menambah atau menghapus input pilihan jawaban
+// Catatan: 'ref' ini saat ini tidak digunakan untuk menambah/menghapus, hanya untuk v-for
 const optionInputs = ref(form.options);
 
 const submit = () => {
@@ -34,8 +35,8 @@ const submit = () => {
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">Tambah Soal Baru</h2>
         </template>
         <div class="py-12 bg-slate-100">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white border-2 border-slate-800 overflow-hidden shadow-[8px_8px_0_#1e293b] sm:rounded-2xl p-6 sm:p-8">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="bg-white border-2 border-slate-800 overflow-hidden shadow-[8px_8px_0_#1e293b] rounded-2xl p-6 sm:p-8">
                     <form @submit.prevent="submit" class="max-w-2xl space-y-6">
                         <div>
                             <InputLabel for="aksara_id" value="Aksara Terkait (Jawaban Benar)" class="font-bold" />
@@ -67,13 +68,16 @@ const submit = () => {
                             </div>
                             <InputError :message="form.errors.options" class="mt-2" />
                         </div>
-                         <div>
+                        <div>
                             <InputLabel for="correct_answer" value="Jawaban Benar" class="font-bold" />
                             <TextInput id="correct_answer" v-model="form.correct_answer" type="text" class="mt-1 block w-full" />
                             <InputError :message="form.errors.correct_answer" class="mt-2" />
                         </div>
                         <div class="flex items-center gap-4">
                             <PrimaryButton :disabled="form.processing">Simpan Soal</PrimaryButton>
+                            <Transition enter-from-class="opacity-0" leave-to-class="opacity-0" class="transition ease-in-out">
+                                <p v-if="form.recentlySuccessful" class="text-sm text-green-600 font-bold">Tersimpan.</p>
+                            </Transition>
                         </div>
                     </form>
                 </div>
