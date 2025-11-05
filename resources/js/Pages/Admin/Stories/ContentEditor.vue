@@ -39,6 +39,7 @@ const openEditModal = (content) => {
     editingContent.value = content;
     editForm.aksara_word = content.aksara_word;
     editForm.latin_word = content.latin_word;
+    editForm.reset(); // Hapus status error/successful sebelumnya
 };
 
 const closeEditModal = () => {
@@ -48,7 +49,12 @@ const closeEditModal = () => {
 const submitUpdate = () => {
     editForm.put(route('admin.story-contents.update', editingContent.value.id), {
         preserveScroll: true,
-        onSuccess: () => closeEditModal(),
+        onSuccess: () => {
+             // Biarkan modal terbuka sejenak agar "Tersimpan" terlihat
+            setTimeout(() => {
+                closeEditModal();
+            }, 1000);
+        },
     });
 };
 
@@ -89,8 +95,8 @@ const triggerDeleteFromEditModal = () => {
         </template>
 
         <div class="py-12 bg-slate-100">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-8">
-                <div class="bg-white border-2 border-slate-800 overflow-hidden shadow-[8px_8px_0_#1e293b] sm:rounded-2xl p-6 sm:p-8">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+                <div class="bg-white border-2 border-slate-800 overflow-hidden shadow-[8px_8px_0_#1e293b] rounded-2xl p-6 sm:p-8">
                     <h3 class="text-2xl font-extrabold text-slate-900 mb-6 border-b-2 border-slate-800 pb-4">Isi Cerita</h3>
                     <div v-if="Object.keys(paragraphs).length > 0" class="space-y-8">
                         <div v-for="(words, paraNum) in paragraphs" :key="paraNum">
@@ -99,8 +105,8 @@ const triggerDeleteFromEditModal = () => {
                                 <div v-for="word in words" :key="word.id" class="group relative bg-slate-50 border-2 border-slate-300 rounded-lg p-2">
                                     <p class="font-sunda text-2xl">{{ word.aksara_word }}</p>
                                     <p class="text-xs text-slate-500">{{ word.latin_word }}</p>
-                                    <div class="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg">
-                                        <button @click="openEditModal(word)" class="font-bold text-white hover:underline">Edit</button>
+                                    <div class="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg cursor-pointer" @click="openEditModal(word)">
+                                        <span class="font-bold text-white hover:underline">Edit</span>
                                     </div>
                                 </div>
                             </div>
@@ -111,7 +117,7 @@ const triggerDeleteFromEditModal = () => {
                     </div>
                 </div>
 
-                <div class="bg-white border-2 border-slate-800 overflow-hidden shadow-[8px_8px_0_#1e293b] sm:rounded-2xl p-6 sm:p-8">
+                <div class="bg-white border-2 border-slate-800 overflow-hidden shadow-[8px_8px_0_#1e293b] rounded-2xl p-6 sm:p-8">
                     <h3 class="text-2xl font-extrabold text-slate-900 mb-4">Tambah Entri Baru</h3>
                     <form @submit.prevent="submitNewWord" class="grid grid-cols-1 sm:grid-cols-4 gap-4 items-end">
                         <div>
@@ -126,8 +132,11 @@ const triggerDeleteFromEditModal = () => {
                             <InputLabel for="paragraph_number" value="Nomor Paragraf" class="font-bold" />
                             <TextInput id="paragraph_number" v-model="addWordForm.paragraph_number" type="number" class="mt-1 block w-full" />
                         </div>
-                        <div>
-                            <PrimaryButton :disabled="addWordForm.processing">Tambah</PrimaryButton>
+                        <div class="space-y-2">
+                            <PrimaryButton :disabled="addWordForm.processing" class="w-full justify-center">Tambah</PrimaryButton>
+                            <Transition enter-from-class="opacity-0" leave-to-class="opacity-0" class="transition ease-in-out">
+                                <p v-if="addWordForm.recentlySuccessful" class="text-sm text-green-600 font-bold text-center sm:text-left">Ditambahkan.</p>
+                            </Transition>
                         </div>
                     </form>
                 </div>
@@ -148,7 +157,10 @@ const triggerDeleteFromEditModal = () => {
                     </div>
                     <div class="mt-6 flex justify-between items-center">
                         <DangerButton type="button" @click="triggerDeleteFromEditModal"> Hapus Entri </DangerButton>
-                        <div class="flex gap-4">
+                        <div class="flex items-center gap-4">
+                            <Transition enter-from-class="opacity-0" leave-to-class="opacity-0" class="transition ease-in-out">
+                                <p v-if="editForm.recentlySuccessful" class="text-sm text-green-600 font-bold">Tersimpan.</p>
+                            </Transition>
                            <SecondaryButton type="button" @click="closeEditModal"> Batal </SecondaryButton>
                            <PrimaryButton :disabled="editForm.processing"> Simpan Perubahan </PrimaryButton>
                         </div>
@@ -159,11 +171,20 @@ const triggerDeleteFromEditModal = () => {
 
         <Modal :show="confirmingDeletion" @close="closeModal">
             <div class="bg-white border-2 border-slate-800 rounded-2xl shadow-[8px_8px_0_#1e293b] p-6 sm:p-8 m-4">
-                <h2 class="text-xl font-extrabold text-slate-900">Hapus Entri Ini?</h2>
-                <p class="mt-2 text-slate-600">Anda yakin ingin menghapus entri <span class="font-bold font-sunda">{{ itemToDelete?.aksara_word }}</span> secara permanen?</p>
+                <div class="flex items-start gap-4">
+                    <div class="flex-shrink-0 bg-red-100 p-3 rounded-xl border-2 border-slate-800">
+                        <svg class="h-8 w-8 text-red-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-extrabold text-slate-900">Hapus Entri Ini?</h2>
+                        <p class="mt-2 text-slate-600">Anda yakin ingin menghapus entri <span class="font-bold font-sunda">{{ itemToDelete?.aksara_word }}</span> secara permanen?</p>
+                    </div>
+                </div>
                 <div class="mt-6 flex justify-end gap-4">
                     <SecondaryButton @click="closeModal"> Batal </SecondaryButton>
-                    <DangerButton @click="deleteItem"> Ya, Hapus </DangerButton>
+                    <DangerButton @click="deleteItem"> Ya, Hapus Permanen </DangerButton>
                 </div>
             </div>
         </Modal>
