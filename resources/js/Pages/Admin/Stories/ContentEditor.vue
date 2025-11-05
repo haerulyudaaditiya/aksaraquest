@@ -112,7 +112,7 @@ const triggerDeleteFromEditModal = () => {
                             </div>
                         </div>
                     </div>
-                     <div v-else class="text-slate-500 text-center py-8">
+                    <div v-else class="text-slate-500 text-center py-8">
                         Belum ada konten untuk dongeng ini. Mulai tambahkan entri di bawah.
                     </div>
                 </div>
@@ -155,16 +155,18 @@ const triggerDeleteFromEditModal = () => {
                         <InputLabel value="Teks Latin" class="font-bold" />
                         <TextInput v-model="editForm.latin_word" type="text" class="mt-1 block w-full" />
                     </div>
-                    <div class="mt-6 flex justify-between items-center">
-                        <DangerButton type="button" @click="triggerDeleteFromEditModal"> Hapus Entri </DangerButton>
-                        <div class="flex items-center gap-4">
-                            <Transition enter-from-class="opacity-0" leave-to-class="opacity-0" class="transition ease-in-out">
-                                <p v-if="editForm.recentlySuccessful" class="text-sm text-green-600 font-bold">Tersimpan.</p>
-                            </Transition>
-                           <SecondaryButton type="button" @click="closeEditModal"> Batal </SecondaryButton>
-                           <PrimaryButton :disabled="editForm.processing"> Simpan Perubahan </PrimaryButton>
+                    <div class="mt-6 flex flex-col sm:flex-row sm:justify-between items-center gap-4">
+                        <DangerButton type="button" @click="triggerDeleteFromEditModal" class="w-full sm:w-auto justify-center"> Hapus Entri </DangerButton>
+
+                        <div class="flex items-center gap-4 w-full sm:w-auto">
+                            <SecondaryButton type="button" @click="closeEditModal" class="w-full justify-center"> Batal </SecondaryButton>
+                            <PrimaryButton :disabled="editForm.processing" class="w-full justify-center"> Simpan Perubahan </PrimaryButton>
                         </div>
                     </div>
+
+                    <Transition enter-from-class="opacity-0" leave-to-class="opacity-0" class="transition ease-in-out">
+                        <p v-if="editForm.recentlySuccessful" class="text-sm text-green-600 font-bold mt-4 text-center sm:text-right">Tersimpan.</p>
+                    </Transition>
                 </form>
             </div>
         </Modal>
