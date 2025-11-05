@@ -40,7 +40,7 @@ onUnmounted(() => window.removeEventListener("mousemove", handleMouseMove));
 <template>
     <Head title="AksaraQuest – Belajar Aksara Sunda dengan Cara Seru" />
 
-    <div class="min-h-screen bg-gradient-to-b from-indigo-50 to-slate-100 text-slate-800 font-sans antialiased flex flex-col">
+    <div class="min-h-screen bg-gradient-to-b from-indigo-50 to-slate-100 text-slate-800 font-sans antialiased flex flex-col font-sunda">
 
         <!-- HEADER -->
         <header class="absolute top-0 left-0 right-0 z-20 p-4 sm:p-6 backdrop-blur-sm bg-white/30 border-b border-white/50">

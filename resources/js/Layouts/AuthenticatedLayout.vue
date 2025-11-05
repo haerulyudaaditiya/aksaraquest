@@ -16,7 +16,7 @@ const user = usePage().props.auth.user;
 
 <template>
     <div>
-        <div class="min-h-screen bg-slate-100">
+        <div class="min-h-screen bg-slate-100 font-sunda">
             <nav class="bg-white border-b border-gray-100">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="flex justify-between h-16">
