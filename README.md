@@ -1,74 +1,130 @@
-# ᮓ AksaraQuest
+# AksaraQuest
 
-![Screenshot Halaman Dashboard AksaraQuest](./images/screenshot.png)
+![Tangkapan Layar AksaraQuest](./images/screenshot.png)
 
-<h3 align="center">
-  <a href="https://aksaraquest.anopus.my.id" target="_blank">🚀 Buka Live Demo 🚀</a>
-</h3>
+**Tautan Demo:** [https://aksaraquest.anopus.my.id](https://aksaraquest.anopus.my.id)
 
-**AksaraQuest** adalah sebuah platform web _gamifikasi_ modern yang dirancang untuk merevitalisasi dan mempopulerkan kembali Aksara Sunda melalui pengalaman belajar yang interaktif, terstruktur, dan menyenangkan. Proyek ini dibangun dengan fokus pada detail, pengalaman pengguna yang memuaskan, dan fondasi teknis yang profesional.
+AksaraQuest adalah platform web berbasis gamifikasi yang dirancang untuk merevitalisasi dan mempopulerkan kembali Aksara Sunda. Melalui pengalaman belajar yang interaktif dan terstruktur, aplikasi ini mengubah proses belajar konvensional menjadi sebuah perjalanan digital yang menarik.
 
----
+## Filosofi Proyek
 
-## 🚀 Filosofi Proyek
+Proyek ini dikembangkan sebagai solusi atas kurangnya media pembelajaran digital yang relevan bagi generasi muda dalam mempelajari budaya lokal. Logo aplikasi ini mengadopsi karakter Aksara Sunda "Da", yang melambangkan "Dalan" atau "Jalan", merepresentasikan sebuah proses perjalanan belajar yang berkelanjutan dan terstruktur.
 
-Proyek ini lahir dari keinginan untuk menciptakan solusi atas kurangnya platform digital yang menarik bagi generasi muda untuk mempelajari Aksara Sunda. Dengan pendekatan seperti Duolingo, AksaraQuest mengubah proses belajar dari hafalan monoton menjadi sebuah petualangan yang memotivasi. Logo aplikasi ini menggunakan aksara **"Da" (ᮓ)**, yang melambangkan **"Dalan"** atau **"Jalan"**, merepresentasikan sebuah proses dan perjalanan belajar yang terstruktur di dalam aplikasi ini.
+## Fitur Utama
 
----
+AksaraQuest mengintegrasikan teknologi modern dengan kurikulum budaya untuk menciptakan ekosistem pembelajaran yang komprehensif.
 
-## ✨ Fitur Unggulan
+### Fitur Pengguna
 
-Aplikasi ini dikemas dengan fitur-fitur canggih untuk menciptakan ekosistem pembelajaran yang lengkap, dari pemula hingga mahir, dengan kontrol penuh bagi administrator.
+**1. Jalur Pembelajaran Terstruktur**
+Sistem kurikulum bertingkat yang memandu pengguna dari tingkat dasar hingga mahir. Pelajaran lanjutan terkunci secara otomatis dan hanya dapat diakses setelah pengguna menyelesaikan materi prasyarat.
 
-### Untuk Pengguna:
+**2. Sistem Tinjauan Cerdas (Spaced Repetition System)**
+Menggunakan algoritma cerdas untuk melacak tingkat penguasaan pengguna terhadap setiap karakter aksara. Sistem secara otomatis menjadwalkan sesi tinjauan ulang pada interval waktu tertentu untuk mengoptimalkan daya ingat jangka panjang.
 
--   **Jalur Pembelajaran Terstruktur**: Alur belajar seperti Duolingo yang memandu pengguna dari bab ke bab. Pelajaran baru akan terbuka hanya setelah pengguna lulus kuis dari pelajaran sebelumnya.
--   **Arena Kuis Cerdas**:
-    -   **4 Tipe Soal Berbeda**: Kenali karakter, cari karakter, dengarkan & kenali nama, dengarkan & cari karakter.
-    -   **Sistem Adaptif**: Algoritma cerdas yang secara otomatis memberikan lebih banyak soal pada aksara yang menjadi kelemahan pengguna.
--   **Mode Dongeng Interaktif**: Pengalaman membaca cerita rakyat Sunda dalam aksara asli, dengan fitur "klik-untuk-terjemahan" yang inovatif untuk melihat transliterasi Latin setiap kata.
--   **Sistem Progresi Lengkap**:
-    -   **XP & Level**: Pengguna mendapatkan XP dari setiap kuis untuk menaikkan Level.
-    -   **Streak Harian**: Sistem "api" yang memberi penghargaan kepada pengguna karena belajar setiap hari berturut-turut untuk membangun kebiasaan.
--   **Sistem Prestasi & Papan Peringkat**: Puluhan lencana (_achievement_) untuk berbagai pencapaian dan papan peringkat global untuk membandingkan total XP dan _streak_ terpanjang.
--   **Latihan Fokus Personal**: Halaman khusus yang secara otomatis mendeteksi aksara terlemah pengguna dan menyediakan sesi latihan yang tertarget.
--   **Ujian Sertifikasi**: Setelah semua pelajaran selesai, pengguna bisa mengambil ujian akhir komprehensif untuk mendapatkan sertifikat digital "Master Aksara Sunda" yang dapat diunduh.
+**3. Arena Kuis Interaktif**
+Modul evaluasi yang mencakup empat tipe soal berbeda (Visual ke Teks, Audio ke Teks, Identifikasi Karakter, dan Pilihan Ganda) untuk menguji pemahaman secara menyeluruh.
 
-### Untuk Admin:
+**4. Mode Dongeng**
+Fitur literasi yang menyajikan cerita rakyat Sunda dalam aksara asli. Dilengkapi dengan fitur interaktif di mana pengguna dapat mengklik setiap kata untuk melihat transliterasi Latin, membantu pemahaman konteks bacaan.
 
--   **Panel Admin Komprehensif**: Antarmuka CRUD (Create, Read, Update, Delete) penuh yang memungkinkan admin mengelola **semua konten dinamis** aplikasi tanpa menyentuh kode, termasuk:
-    -   Manajemen Aksara (termasuk upload file audio).
-    -   Manajemen Kurikulum (Bab & Pelajaran).
-    -   Manajemen Bank Soal.
-    -   Manajemen Dongeng (termasuk editor konten kata per kata).
+**5. Gamifikasi dan Progresi**
+* **XP dan Level:** Pengguna mendapatkan poin pengalaman (XP) untuk setiap aktivitas belajar.
+* **Streak Harian:** Sistem pelacakan aktivitas harian untuk membangun kebiasaan belajar yang konsisten.
+* **Papan Peringkat:** Kompetisi global antar pengguna berdasarkan perolehan XP dan konsistensi belajar.
 
----
+**6. Sertifikasi Digital**
+Sistem ujian akhir yang komprehensif. Pengguna yang lulus dengan nilai di atas ambang batas akan mendapatkan sertifikat digital "Master Aksara Sunda" yang di-generate secara otomatis dalam format PDF/Gambar.
 
-## 🛠️ Dibangun Dengan Teknologi
+**7. Keamanan Akun**
+* Integrasi Google OAuth untuk login cepat dan aman.
+* Perlindungan Google reCAPTCHA pada formulir registrasi dan login.
+* Verifikasi email wajib untuk pendaftaran akun baru.
 
--   **Backend**: Laravel 12
--   **Frontend**: Vue.js 3 & Inertia.js
--   **Database**: MySQL
--   **Styling**: Tailwind CSS
--   **Lingkungan Pengembangan**: Docker (Laravel Sail)
+### Fitur Administrator
 
----
+Panel admin lengkap dengan fungsi CRUD (Create, Read, Update, Delete) untuk mengelola seluruh konten aplikasi tanpa perlu mengubah kode program:
+* Manajemen Data Aksara (Karakter, Latin, Audio).
+* Manajemen Kurikulum (Bab dan Pelajaran).
+* Manajemen Bank Soal Kuis.
+* Manajemen Konten Dongeng.
+* Manajemen Pengguna.
 
-## ⚙️ Instalasi & Setup (Lokal dengan Docker)
+## Teknologi yang Digunakan
 
-1.  _Clone_ repositori ini: `git clone https://github.com/haerulyudaaditiya/aksaraquest.git`
-2.  Masuk ke direktori: `cd aksaraquest`
-3.  Salin file environment: `cp .env.example .env`
-4.  Jalankan Docker Sail: `sail up -d`
-5.  Install dependensi:
+* **Backend:** Laravel 12
+* **Frontend:** Vue.js 3 (Composition API)
+* **Full-stack Adapter:** Inertia.js
+* **Database:** MySQL
+* **Styling:** Tailwind CSS
+
+## Panduan Instalasi (Windows)
+
+Ikuti langkah-langkah berikut untuk menjalankan proyek ini di lingkungan Windows (menggunakan Laragon, XAMPP, atau terminal manual).
+
+**Prasyarat:**
+* PHP >= 8.2
+* Composer
+* Node.js & NPM
+* MySQL
+
+**Langkah Instalasi:**
+
+1.  **Kloning Repositori**
+    Buka terminal dan jalankan perintah berikut:
     ```bash
-    sail composer install
-    sail npm install --legacy-peer-deps
+    git clone [https://github.com/haerulyudaaditiya/aksaraquest.git](https://github.com/haerulyudaaditiya/aksaraquest.git)
     ```
-6.  Generate kunci aplikasi: `sail artisan key:generate`
-7.  Jalankan migrasi dan seeder untuk membangun database dan mengisi semua konten awal:
+
+2.  **Masuk ke Direktori Proyek**
     ```bash
-    sail artisan migrate:fresh --seed
+    cd aksaraquest
     ```
-8.  Jalankan server Vite untuk _hot-reloading_: `sail npm run dev`
-9.  Akses aplikasi di `http://localhost`.
+
+3.  **Instal Dependensi Backend (PHP)**
+    ```bash
+    composer install
+    ```
+
+4.  **Instal Dependensi Frontend (Node.js)**
+    ```bash
+    npm install
+    ```
+
+5.  **Konfigurasi Environment**
+    Salin file contoh konfigurasi dan ubah namanya menjadi `.env`:
+    ```bash
+    copy .env.example .env
+    ```
+    Buka file `.env` dan sesuaikan konfigurasi berikut:
+    * **Database:** Sesuaikan `DB_DATABASE`, `DB_USERNAME`, dan `DB_PASSWORD`.
+    * **Google OAuth:** Isi `GOOGLE_CLIENT_ID` dan `GOOGLE_CLIENT_SECRET`.
+    * **reCAPTCHA:** Isi `NOCAPTCHA_SITEKEY`, `NOCAPTCHA_SECRET`, dan `VITE_RECAPTCHA_SITE_KEY`.
+    * **Email:** Sesuaikan konfigurasi SMTP untuk fitur verifikasi email.
+
+6.  **Generate Key Aplikasi**
+    ```bash
+    php artisan key:generate
+    ```
+
+7.  **Migrasi dan Seeding Database**
+    Perintah ini akan membuat tabel dan mengisi data awal (termasuk akun admin default, data aksara, dan soal latihan):
+    ```bash
+    php artisan migrate:fresh --seed
+    ```
+
+8.  **Jalankan Aplikasi**
+    Anda perlu menjalankan dua terminal secara bersamaan.
+
+    Terminal 1 (Server Laravel):
+    ```bash
+    php artisan serve
+    ```
+
+    Terminal 2 (Kompilasi Aset Frontend):
+    ```bash
+    npm run dev
+    ```
+
+9.  **Akses Aplikasi**
+    Buka browser dan kunjungi `http://localhost:8000`.
