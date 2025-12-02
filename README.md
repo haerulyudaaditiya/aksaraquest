@@ -2,7 +2,7 @@
 
 ![Tangkapan Layar AksaraQuest](./images/screenshot.png)
 
-**Tautan Demo:** [https://aksaraquest.anopus.my.id](https://aksaraquest.anopus.my.id)
+**Tautan Demo:** [https://aksaraquest.anopus.my.id](https://aksaraquest.newhimatif.com/)
 
 AksaraQuest adalah platform web berbasis gamifikasi yang dirancang untuk merevitalisasi dan mempopulerkan kembali Aksara Sunda. Melalui pengalaman belajar yang interaktif dan terstruktur, aplikasi ini mengubah proses belajar konvensional menjadi sebuah perjalanan digital yang menarik.
 
