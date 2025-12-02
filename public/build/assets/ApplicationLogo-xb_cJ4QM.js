@@ -1,0 +1,1 @@
+import{_ as o}from"./_plugin-vue_export-helper-DlAUqK2U.js";import{c as t,o as c}from"./app-884A-9UK.js";const e={},n={class:"font-sunda text-5xl font-bold text-indigo-600"};function s(r,_){return c(),t("div",n," ᮓ ")}const f=o(e,[["render",s]]);export{f as A};
