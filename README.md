@@ -73,7 +73,7 @@ Ikuti langkah-langkah berikut untuk menjalankan proyek ini di lingkungan Windows
 1.  **Kloning Repositori**
     Buka terminal dan jalankan perintah berikut:
     ```bash
-    git clone [https://github.com/haerulyudaaditiya/aksaraquest.git](https://github.com/haerulyudaaditiya/aksaraquest.git)
+    git clone https://github.com/haerulyudaaditiya/aksaraquest.git
     ```
 
 2.  **Masuk ke Direktori Proyek**
